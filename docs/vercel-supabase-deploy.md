@@ -53,7 +53,11 @@ https://你的项目名.vercel.app/admin-login.html
 
 ## 4. 本地说明
 
-当前项目保留了 `server.js`，它是本地 SQLite 演示备用服务。
+当前项目保留了 `server.js`，它是本地 SQLite 演示备用服务。本地启动命令为：
+
+```bash
+npm run local
+```
 
 Vercel 部署时使用的是：
 
