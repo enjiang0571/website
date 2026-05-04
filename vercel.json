@@ -21,8 +21,36 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "src": "/api/faqs/([^/]+)",
+      "dest": "/api/faqs/[id].js?id=$1"
+    },
+    {
+      "src": "/api/faqs",
+      "dest": "/api/faqs.js"
+    },
+    {
+      "src": "/api/news/([^/]+)",
+      "dest": "/api/news/[id].js?id=$1"
+    },
+    {
+      "src": "/api/news",
+      "dest": "/api/news.js"
+    },
+    {
+      "src": "/api/bookings",
+      "dest": "/api/bookings.js"
+    },
+    {
+      "src": "/api/admin/login",
+      "dest": "/api/admin/login.js"
+    },
+    {
+      "src": "/api/admin/me",
+      "dest": "/api/admin/me.js"
+    },
+    {
+      "src": "/api/admin/logout",
+      "dest": "/api/admin/logout.js"
     },
     {
       "src": "/",
