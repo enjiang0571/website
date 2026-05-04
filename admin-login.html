@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BeeFintech 管理后台登录</title>
+  <style>
+    :root { --blue:#0b6bff; --ink:#07142f; --muted:#6f7f99; --line:#d8e7fb; --bg:#f3f8ff; }
+    * { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; display:grid; place-items:center; font-family:Inter, "Microsoft YaHei", Arial, sans-serif; color:var(--ink); background:linear-gradient(135deg,#fbfdff,var(--bg)); }
+    .card { width:min(430px, calc(100vw - 40px)); padding:34px; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:0 28px 80px rgba(36,97,168,.12); }
+    img { width:168px; height:auto; margin-bottom:24px; }
+    h1 { margin:0 0 8px; font-size:28px; }
+    p { margin:0 0 26px; color:var(--muted); font-weight:650; line-height:1.7; }
+    label { display:grid; gap:8px; color:#41516d; font-weight:800; }
+    input { height:46px; padding:0 14px; border:1px solid var(--line); border-radius:8px; font:inherit; font-weight:700; outline:none; }
+    button, a { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:0 18px; border-radius:8px; border:0; color:#fff; background:var(--blue); font:inherit; font-weight:850; text-decoration:none; cursor:pointer; }
+    .row { display:flex; gap:12px; margin-top:20px; }
+    .ghost { color:var(--blue); background:#fff; border:1px solid var(--line); }
+    .error { min-height:22px; margin-top:12px; color:#d92d20; font-weight:750; }
+  </style>
+</head>
+<body>
+  <form class="card" id="loginForm">
+    <img src="assets/brand/beefintech-logo@4x.png" alt="BeeFintech" />
+    <h1>管理后台登录</h1>
+    <p>请输入管理员密码进入 FAQ、资讯与预约管理。</p>
+    <label>管理员密码
+      <input name="password" type="password" placeholder="默认密码 admin123" required autofocus />
+    </label>
+    <div class="row">
+      <button type="submit">登录后台</button>
+      <a class="ghost" href="index.html">返回官网</a>
+    </div>
+    <div class="error" id="error"></div>
+  </form>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const password = new FormData(event.currentTarget).get("password");
+      const error = document.getElementById("error");
+      error.textContent = "";
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password })
+      });
+      if (response.ok) {
+        location.href = "admin.html";
+      } else {
+        error.textContent = "密码错误，请重新输入。";
+      }
+    });
+  </script>
+</body>
+</html>

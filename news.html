@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>保险科技资讯 - BeeFintech</title>
+  <style>
+    :root { --blue:#0b6bff; --ink:#07142f; --muted:#6f7f99; --line:#d8e7fb; --bg:#f3f8ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: Inter, "Microsoft YaHei", Arial, sans-serif; color:var(--ink); background:linear-gradient(135deg,#fbfdff,var(--bg)); }
+    a { color:inherit; text-decoration:none; }
+    .header { position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; height:72px; padding:0 7vw; background:rgba(255,255,255,.92); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+    .logo img { width:150px; height:auto; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 18px; border-radius:7px; color:white; background:var(--blue); font-weight:800; box-shadow:0 12px 26px rgba(11,107,255,.18); }
+    .ghost { color:var(--blue); background:#fff; border:1px solid var(--line); box-shadow:none; }
+    main { max-width:1120px; margin:44px auto 80px; padding:0 24px; }
+    .panel { padding:34px; border:1px solid var(--line); border-radius:10px; background:white; box-shadow:0 24px 70px rgba(36,97,168,.08); }
+    .eyebrow { color:var(--blue); font-size:13px; font-weight:850; }
+    h1 { margin:10px 0 8px; font-size:36px; letter-spacing:0; }
+    p { color:var(--muted); line-height:1.8; font-weight:650; }
+    .list { display:grid; gap:14px; margin-top:26px; }
+    .item { display:grid; grid-template-columns:120px 1fr auto; gap:18px; align-items:center; min-height:94px; padding:14px 18px; border:1px solid var(--line); border-radius:9px; background:#fbfdff; font-size:17px; font-weight:820; transition:.18s ease; }
+    .item:hover { border-color:#8fbdff; transform:translateY(-1px); box-shadow:0 12px 30px rgba(11,107,255,.08); }
+    .thumb { height:66px; border-radius:8px; background:linear-gradient(135deg,#78bdff,#10366c); background-size:cover; background-position:center; }
+    .tag { color:var(--blue); font-size:13px; font-weight:850; margin-bottom:4px; }
+    .date { display:block; color:var(--muted); font-size:13px; font-weight:750; margin-top:6px; }
+    .actions { display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="index.html"><img src="assets/brand/beefintech-logo@4x.png" alt="BeeFintech" /></a>
+    <a class="btn" href="index.html#booking">预约演示 →</a>
+  </header>
+  <main>
+    <section class="panel">
+      <div class="eyebrow">InsurTech News</div>
+      <h1>保险科技资讯</h1>
+      <p>关注保险科技、经纪业务数字化、产品动态与行业实践。</p>
+      <div class="list" id="newsList">
+        <a class="item" href="news-detail.html?id=trend"><span class="thumb"></span><span><span class="tag">行业洞察</span><br>香港保险业数字化趋势与机遇<span class="date">2026-05-20</span></span><span>›</span></a>
+        <a class="item" href="news-detail.html?id=release"><span class="thumb"></span><span><span class="tag">产品动态</span><br>BeeFintech 平台 2024 春季更新<span class="date">2026-05-15</span></span><span>›</span></a>
+        <a class="item" href="news-detail.html?id=practice"><span class="thumb"></span><span><span class="tag">最佳实践</span><br>数字化如何提升经纪业务生产力<span class="date">2026-05-08</span></span><span>›</span></a>
+      </div>
+      <div class="actions">
+        <a class="btn ghost" href="index.html">返回首页</a>
+      </div>
+    </section>
+  </main>
+  <script>
+    const newsList = document.getElementById("newsList");
+    const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    const gradients = ["linear-gradient(135deg,#78bdff,#10366c)", "radial-gradient(circle at 50% 50%, #86f3ff, transparent 22%), linear-gradient(135deg,#073874,#07142f)", "linear-gradient(135deg,#b7cdea,#1e3d6f)", "linear-gradient(135deg,#d9e8ff,#4f87d8)", "linear-gradient(135deg,#eaf4ff,#0b6bff)"];
+    function thumbStyle(item, index) {
+      const image = item.image_url ? `url('${escapeHtml(item.image_url)}')` : gradients[index % gradients.length];
+      return `style="background-image:${image};"`;
+    }
+    fetch("/api/news")
+      .then((res) => res.ok ? res.json() : Promise.reject(new Error("News load failed")))
+      .then((items) => {
+        if (!items.length) return;
+        newsList.innerHTML = items.map((item, index) => `
+          <a class="item" href="news-detail.html?id=${encodeURIComponent(item.id)}">
+            <span class="thumb" ${thumbStyle(item, index)}></span>
+            <span><span class="tag">${escapeHtml(item.category)}</span><br>${escapeHtml(item.title)}<span class="date">${escapeHtml(item.published_at)}</span></span>
+            <span>›</span>
+          </a>
+        `).join("");
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

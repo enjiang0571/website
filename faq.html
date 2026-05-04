@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ 自助查询 - BeeFintech</title>
+  <style>
+    :root { --blue:#0b6bff; --ink:#07142f; --muted:#6f7f99; --line:#d8e7fb; --bg:#f3f8ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: Inter, "Microsoft YaHei", Arial, sans-serif; color:var(--ink); background:linear-gradient(135deg,#fbfdff,var(--bg)); }
+    a { color:inherit; text-decoration:none; }
+    .header { position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; height:72px; padding:0 7vw; background:rgba(255,255,255,.92); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+    .logo { display:flex; align-items:center; gap:10px; font-size:20px; font-weight:860; }
+    .logo img { width:150px; height:auto; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 18px; border-radius:7px; color:white; background:var(--blue); font-weight:800; box-shadow:0 12px 26px rgba(11,107,255,.18); }
+    .ghost { color:var(--blue); background:#fff; border:1px solid var(--line); box-shadow:none; }
+    main { max-width:1120px; margin:44px auto 80px; padding:0 24px; }
+    .panel { padding:34px; border:1px solid var(--line); border-radius:10px; background:white; box-shadow:0 24px 70px rgba(36,97,168,.08); }
+    .eyebrow { color:var(--blue); font-size:13px; font-weight:850; }
+    h1 { margin:10px 0 8px; font-size:36px; letter-spacing:0; }
+    p { color:var(--muted); line-height:1.8; font-weight:650; }
+    .search { display:flex; gap:10px; margin:26px 0; }
+    .search input { flex:1; height:48px; padding:0 16px; border:1px solid var(--line); border-radius:8px; font:inherit; font-weight:700; outline:none; }
+    .list { display:grid; gap:12px; margin-top:24px; }
+    .item { display:flex; align-items:center; justify-content:space-between; min-height:66px; padding:0 20px; border:1px solid var(--line); border-radius:9px; background:#fbfdff; font-size:17px; font-weight:820; transition:.18s ease; }
+    .item:hover { border-color:#8fbdff; transform:translateY(-1px); box-shadow:0 12px 30px rgba(11,107,255,.08); }
+    .actions { display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="index.html"><img src="assets/brand/beefintech-logo@4x.png" alt="BeeFintech" /></a>
+    <a class="btn" href="index.html#booking">预约演示 →</a>
+  </header>
+  <main>
+    <section class="panel">
+      <div class="eyebrow">FAQ Center</div>
+      <h1>FAQ 自助查询</h1>
+      <p>查看常见问题，快速了解平台能力、数据安全、佣金结算、系统对接与费用方式。</p>
+      <form class="search" action="faq-search.html" method="get">
+        <input name="q" type="search" placeholder="搜索问题..." />
+        <button class="btn" type="submit">搜索</button>
+      </form>
+      <div class="list" id="faqList">
+        <a class="item" href="faq-detail.html?id=security">平台如何保障数据安全？<span>›</span></a>
+        <a class="item" href="faq-detail.html?id=commission">佣金结算如何保证准确？<span>›</span></a>
+        <a class="item" href="faq-detail.html?id=integration">支持哪些对接方式？<span>›</span></a>
+        <a class="item" href="faq-detail.html?id=insurers">系统支持哪些保险公司？<span>›</span></a>
+        <a class="item" href="faq-detail.html?id=pricing">费用如何计算？<span>›</span></a>
+      </div>
+      <div class="actions">
+        <a class="btn ghost" href="index.html">返回首页</a>
+      </div>
+    </section>
+  </main>
+  <script>
+    const faqList = document.getElementById("faqList");
+    const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    fetch("/api/faqs")
+      .then((res) => res.ok ? res.json() : Promise.reject(new Error("FAQ load failed")))
+      .then((items) => {
+        if (!items.length) return;
+        faqList.innerHTML = items.map((item) => `<a class="item" href="faq-detail.html?id=${encodeURIComponent(item.id)}">${escapeHtml(item.question)}<span>›</span></a>`).join("");
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

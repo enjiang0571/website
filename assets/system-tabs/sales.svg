@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fbfdff"/><stop offset="1" stop-color="#f4f9ff"/></linearGradient>
+    <filter id="s" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#1458b8" flood-opacity=".10"/></filter>
+  </defs>
+  <rect width="1200" height="720" rx="22" fill="url(#bg)"/>
+  <rect x="28" y="24" width="1144" height="672" rx="18" fill="#fff" stroke="#dbe8fb" filter="url(#s)"/>
+  <text x="58" y="72" font-family="Arial,'Microsoft YaHei'" font-size="30" font-weight="800" fill="#10203e">销售工具系统</text>
+  <text x="58" y="104" font-family="Arial,'Microsoft YaHei'" font-size="15" fill="#71809a">产品库、产品对比、计划书、保费试算，帮助经纪人快速完成展业方案</text>
+  <g font-family="Arial,'Microsoft YaHei'">
+    <g transform="translate(58 136)">
+      <rect width="250" height="98" rx="14" fill="#fff" stroke="#dfe9f7"/><text x="22" y="34" font-size="14" fill="#71809a" font-weight="700">产品库总数</text><text x="22" y="72" font-size="32" fill="#10203e" font-weight="800">1,286</text><text x="148" y="72" font-size="14" fill="#05a886" font-weight="800">↑ 12.5%</text>
+    </g>
+    <g transform="translate(334 136)"><rect width="250" height="98" rx="14" fill="#fff" stroke="#dfe9f7"/><text x="22" y="34" font-size="14" fill="#71809a" font-weight="700">计划书生成</text><text x="22" y="72" font-size="32" fill="#10203e" font-weight="800">3,892</text><text x="148" y="72" font-size="14" fill="#05a886" font-weight="800">↑ 8.3%</text></g>
+    <g transform="translate(610 136)"><rect width="250" height="98" rx="14" fill="#fff" stroke="#dfe9f7"/><text x="22" y="34" font-size="14" fill="#71809a" font-weight="700">保费试算</text><text x="22" y="72" font-size="32" fill="#10203e" font-weight="800">18,750</text><text x="166" y="72" font-size="14" fill="#05a886" font-weight="800">↑ 15.2%</text></g>
+    <g transform="translate(886 136)"><rect width="250" height="98" rx="14" fill="#fff" stroke="#dfe9f7"/><text x="22" y="34" font-size="14" fill="#71809a" font-weight="700">方案转化率</text><text x="22" y="72" font-size="32" fill="#10203e" font-weight="800">82.6%</text><text x="164" y="72" font-size="14" fill="#05a886" font-weight="800">↑ 6.1%</text></g>
+    <rect x="58" y="262" width="650" height="250" rx="16" fill="#fff" stroke="#dfe9f7"/>
+    <text x="86" y="306" font-size="20" font-weight="800" fill="#10203e">产品方案转化趋势</text>
+    <g stroke="#edf3fb"><path d="M86 345H674M86 392H674M86 439H674M86 486H674"/></g>
+    <polyline points="86,476 158,430 230,442 302,384 374,350 446,382 518,316 674,336" fill="none" stroke="#106bff" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="674" cy="336" r="8" fill="#106bff"/>
+    <rect x="736" y="262" width="400" height="250" rx="16" fill="#fff" stroke="#dfe9f7"/>
+    <text x="764" y="306" font-size="20" font-weight="800" fill="#10203e">热门产品对比</text>
+    <g font-size="16" fill="#53637c">
+      <rect x="764" y="334" width="344" height="42" rx="9" fill="#f6faff"/><text x="786" y="362">尊享储蓄计划</text><text x="1012" y="362" fill="#106bff" font-weight="800">5.20%</text>
+      <rect x="764" y="390" width="344" height="42" rx="9" fill="#f6faff"/><text x="786" y="418">高端医疗保障</text><text x="1012" y="418" fill="#106bff" font-weight="800">4.80%</text>
+      <rect x="764" y="446" width="344" height="42" rx="9" fill="#f6faff"/><text x="786" y="474">教育储蓄计划</text><text x="1012" y="474" fill="#106bff" font-weight="800">3.50%</text>
+    </g>
+    <rect x="58" y="540" width="1078" height="126" rx="16" fill="#fff" stroke="#dfe9f7"/>
+    <text x="86" y="582" font-size="20" font-weight="800" fill="#10203e">最近生成计划书</text>
+    <g font-size="15" fill="#53637c">
+      <text x="86" y="620">客户</text><text x="260" y="620">产品</text><text x="520" y="620">保费</text><text x="720" y="620">状态</text><text x="920" y="620">生成日期</text><path d="M86 636H1108" stroke="#edf3fb"/>
+      <text x="86" y="662">郭女士</text><text x="260" y="662">尊享储蓄计划</text><text x="520" y="662">100,000 HKD</text><text x="720" y="662" fill="#05a886" font-weight="800">已发送</text><text x="920" y="662">2026-05-03</text>
+    </g>
+  </g>
+</svg>

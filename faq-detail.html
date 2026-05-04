@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ 详情 - BeeFintech</title>
+  <style>
+    :root { --blue:#0b6bff; --ink:#07142f; --muted:#6f7f99; --line:#d8e7fb; --bg:#f3f8ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: Inter, "Microsoft YaHei", Arial, sans-serif; color:var(--ink); background:linear-gradient(135deg,#fbfdff,var(--bg)); }
+    a { color:inherit; text-decoration:none; }
+    .header { position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; height:72px; padding:0 7vw; background:rgba(255,255,255,.92); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+    .logo img { width:150px; height:auto; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 18px; border-radius:7px; color:white; background:var(--blue); font-weight:800; box-shadow:0 12px 26px rgba(11,107,255,.18); }
+    .ghost { color:var(--blue); background:#fff; border:1px solid var(--line); box-shadow:none; }
+    main { max-width:960px; margin:44px auto 80px; padding:0 24px; }
+    .panel { padding:38px; border:1px solid var(--line); border-radius:10px; background:white; box-shadow:0 24px 70px rgba(36,97,168,.08); }
+    .eyebrow { color:var(--blue); font-size:13px; font-weight:850; }
+    h1 { margin:10px 0 18px; font-size:34px; letter-spacing:0; }
+    .answer { color:#334765; font-size:17px; line-height:2; font-weight:650; }
+    .actions { display:flex; gap:12px; margin-top:32px; flex-wrap:wrap; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="index.html"><img src="assets/brand/beefintech-logo@4x.png" alt="BeeFintech" /></a>
+    <a class="btn" href="index.html#booking">预约演示 →</a>
+  </header>
+  <main>
+    <section class="panel">
+      <div class="eyebrow">FAQ Detail</div>
+      <h1 id="question"></h1>
+      <div class="answer" id="answer"></div>
+      <div class="actions">
+        <a class="btn ghost" href="faq.html">返回 FAQ 列表</a>
+        <a class="btn ghost" href="index.html">返回首页</a>
+      </div>
+    </section>
+  </main>
+  <script>
+    const faqs = {
+      security: ["平台如何保障数据安全？", "BeeFintech 通过权限分级、加密传输、操作留痕、数据备份与访问审计等机制保障业务数据安全。平台也支持按团队、角色、渠道配置不同的数据可见范围，适配经纪团队、代理人和管理者的不同工作边界。"],
+      commission: ["佣金结算如何保证准确？", "系统可按产品、渠道、团队层级与佣金方案自动计算佣金，并通过对账状态、审批流程和发放记录减少人工核算误差。佣金规则可以配置，结算过程可追踪，方便团队进行复核与管理。"],
+      integration: ["支持哪些对接方式？", "平台支持标准 API、文件导入、数据同步任务和定制接口对接，可连接保险公司、经纪团队、客户服务和数据分析场景。不同成熟度的团队可以从轻量导入逐步升级到自动化数据同步。"],
+      insurers: ["系统支持哪些保险公司？", "系统可根据团队业务范围配置保险公司、产品库、计划书模板与保费试算规则，支持持续扩展新的保险公司和产品类型，方便团队统一维护产品资料与业务流程。"],
+      pricing: ["费用如何计算？", "费用通常依据团队规模、启用模块、系统对接范围和定制服务内容综合评估。建议预约产品演示后，结合团队当前流程、人员规模和数据对接需求获取更准确的方案报价。"]
+    };
+    const question = document.getElementById("question");
+    const answer = document.getElementById("answer");
+    const id = new URLSearchParams(location.search).get("id") || "security";
+    function render(item) {
+      question.textContent = item.question || item[0];
+      answer.textContent = item.answer || item[1];
+    }
+    fetch(`/api/faqs/${encodeURIComponent(id)}`)
+      .then((res) => res.ok ? res.json() : Promise.reject(new Error("FAQ detail failed")))
+      .then(render)
+      .catch(() => render(faqs[id] || ["未找到相关问题", "请返回 FAQ 列表查看已有问题，或返回首页预约产品演示。"]));
+  </script>
+</body>
+</html>

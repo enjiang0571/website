@@ -1,0 +1,3061 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BeeFintech | 保险科技服务平台</title>
+  <style>
+    :root {
+      --blue: #0968ff;
+      --blue-dark: #0058e6;
+      --ink: #07142f;
+      --text: #44536e;
+      --muted: #71809a;
+      --line: #dce9fb;
+      --soft: #f6fbff;
+      --container: 1120px;
+      --radius: 8px;
+      --shadow: 0 18px 45px rgba(20, 82, 170, 0.11);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: #fbfdff;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 76% 15%, rgba(23, 105, 255, 0.14), transparent 28%),
+        linear-gradient(180deg, #ffffff 0%, #f8fbff 44%, #ffffff 100%);
+    }
+
+    .container {
+      width: min(var(--container), calc(100vw - 72px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 70px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      gap: 32px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      width: 164px;
+      height: 44px;
+    }
+
+    .brand img {
+      display: block;
+      width: 164px;
+      height: auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 42px;
+      flex: 1;
+      color: #07142f;
+      font-size: 15px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .nav-item {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      height: 70px;
+    }
+
+    .chevron {
+      width: 9px;
+      height: 9px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+      opacity: 0.72;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 62px;
+      left: 50%;
+      width: 210px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(8px);
+      transition: 0.16s ease;
+    }
+
+    .nav-item:hover .dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 12px;
+      border-radius: 6px;
+      color: #223452;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .dropdown a:hover {
+      color: var(--blue);
+      background: #edf5ff;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: #15213a;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .lang {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 40px;
+      color: #5d6b82;
+      font-size: 13px;
+      font-weight: 560;
+      cursor: pointer;
+    }
+
+    .lang .chevron {
+      width: auto;
+      height: auto;
+      border: 0;
+      transform: none;
+      opacity: 0.72;
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .language-menu {
+      position: absolute;
+      top: 42px;
+      right: 0;
+      width: 132px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+      transition: 0.16s ease;
+    }
+
+    .lang.open .language-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .language-option {
+      display: block;
+      width: 100%;
+      height: 34px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 5px;
+      color: #263955;
+      background: transparent;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .language-option:hover,
+    .language-option.active {
+      color: var(--blue);
+      background: #edf5ff;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 43px;
+      padding: 0 24px;
+      border-radius: 5px;
+      color: #fff;
+      background: linear-gradient(135deg, #0864ff 0%, #177cff 100%);
+      box-shadow: 0 10px 22px rgba(9, 104, 255, 0.2);
+      font-weight: 750;
+      transition: 0.16s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(9, 104, 255, 0.28);
+    }
+
+    .hero .btn {
+      min-height: 50px;
+      padding: 0 34px;
+      border-radius: 6px;
+      font-size: 16px;
+      box-shadow: 0 16px 30px rgba(9, 104, 255, 0.26);
+    }
+
+    .btn-secondary {
+      color: var(--blue);
+      background: #fff;
+      border: 1px solid #9bbfff;
+      box-shadow: none;
+    }
+
+    .hero {
+      min-height: 520px;
+      padding: 58px 0 26px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(rgba(9, 104, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(9, 104, 255, 0.045) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      height: 38px;
+      padding: 0 18px;
+      border: 1px solid #cde1ff;
+      border-radius: 999px;
+      color: #1457c8;
+      background: #edf5ff;
+      font-size: 14px;
+      font-weight: 730;
+    }
+
+    .hero h1 {
+      margin: 32px 0 14px;
+      color: var(--ink);
+      font-size: 58px;
+      line-height: 1.12;
+      font-weight: 860;
+    }
+
+    .hero h2 {
+      margin: 0 0 21px;
+      color: var(--blue);
+      font-size: 24px;
+      line-height: 1.35;
+      font-weight: 790;
+    }
+
+    .hero p {
+      width: 560px;
+      max-width: 100%;
+      margin: 0;
+      color: #58677f;
+      font-size: 17px;
+      line-height: 1.9;
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .proofs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 34px;
+      margin-top: 34px;
+      color: #1f3150;
+      font-size: 13px;
+      font-weight: 730;
+    }
+
+    .proof {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .proof-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      flex: 0 0 auto;
+      border-radius: 8px;
+      color: var(--blue);
+      background: #edf5ff;
+      box-shadow: inset 0 0 0 1px rgba(9, 104, 255, 0.08);
+    }
+
+    .proof-icon svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .mini-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      color: var(--blue);
+      background: #edf5ff;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .hero-art {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .topology-3d {
+      position: relative;
+      width: min(100%, 650px);
+      height: 500px;
+      overflow: hidden;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 52% 46%, rgba(9, 104, 255, 0.17), transparent 25%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.95), transparent 34%),
+        linear-gradient(rgba(9, 104, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(9, 104, 255, 0.05) 1px, transparent 1px),
+        rgba(255,255,255,0.72);
+      background-size: auto, auto, 46px 46px, 46px 46px, auto;
+      box-shadow: 0 24px 55px rgba(25, 88, 180, 0.11);
+      perspective: 900px;
+    }
+
+    .topology-3d::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(110deg, transparent 0 40%, rgba(255,255,255,0.34) 48%, transparent 56% 100%);
+      animation: topology-sheen 7s ease-in-out infinite;
+    }
+
+    .topology-lines {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .topology-lines line,
+    .topology-lines path {
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 7 8;
+      animation: dash-flow 16s linear infinite;
+    }
+
+    .topology-lines .blue-line {
+      stroke: rgba(9, 104, 255, 0.58);
+      stroke-width: 2;
+    }
+
+    .topology-lines .green-line {
+      stroke: rgba(18, 179, 160, 0.62);
+      stroke-width: 2;
+    }
+
+    .topology-core {
+      position: absolute;
+      left: 50%;
+      top: 47%;
+      z-index: 4;
+      width: 210px;
+      height: 210px;
+      transform: translate(-50%, -50%) rotateX(58deg);
+      transform-style: preserve-3d;
+    }
+
+    .core-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border: 1px solid rgba(9, 104, 255, 0.24);
+      border-radius: 30px;
+      background: linear-gradient(145deg, rgba(9, 104, 255, 0.08), rgba(255,255,255,0.84));
+      box-shadow: inset 0 -18px 35px rgba(9, 104, 255, 0.08);
+      transform-style: preserve-3d;
+      transform-origin: center center;
+    }
+
+    .core-ring.r1 {
+      width: 210px;
+      height: 210px;
+      --z: 0px;
+      transform: translate(-50%, -50%) rotate(45deg) translateZ(var(--z));
+      animation: ring-spin 20s linear infinite;
+    }
+
+    .core-ring.r2 {
+      width: 160px;
+      height: 160px;
+      --z: 28px;
+      transform: translate(-50%, -50%) rotate(45deg) translateZ(var(--z));
+      animation: ring-spin-reverse 16s linear infinite;
+    }
+
+    .core-ring.r3 {
+      width: 108px;
+      height: 108px;
+      --z: 56px;
+      transform: translate(-50%, -50%) rotate(45deg) translateZ(var(--z));
+      background: rgba(255,255,255,0.94);
+      animation: ring-spin 12s linear infinite;
+    }
+
+    .core-logo {
+      position: absolute;
+      left: 50%;
+      top: 33%;
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.9);
+      box-shadow:
+        0 18px 32px rgba(9, 104, 255, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.36);
+      transform: translate(-50%, -50%);
+      z-index: 20;
+    }
+
+    .core-logo img {
+      width: 62px;
+      height: auto;
+      filter: saturate(1.08);
+    }
+
+    .core-shadow {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 168px;
+      height: 46px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(9, 104, 255, 0.28), transparent 68%);
+      transform: translate(-50%, 72px) rotateX(82deg);
+      filter: blur(8px);
+    }
+
+    .topology-node {
+      position: absolute;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 138px;
+      min-height: 62px;
+      padding: 12px 14px;
+      border: 1px solid #d9e8fb;
+      border-radius: 8px;
+      color: #172642;
+      background: rgba(255,255,255,0.94);
+      box-shadow: 0 14px 32px rgba(31, 88, 160, 0.09);
+      font-size: 15px;
+      font-weight: 820;
+    }
+
+    .topology-node small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .topology-node .mini-icon {
+      width: 38px;
+      height: 38px;
+    }
+
+    .topo-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      border-radius: 8px;
+      color: var(--blue);
+      background: #edf5ff;
+    }
+
+    .topo-icon.green {
+      color: #10a88f;
+      background: #e9fbf6;
+    }
+
+    .topo-icon.purple {
+      color: #7457f0;
+      background: #f1edff;
+    }
+
+    .topo-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2.1;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .topology-node.n-client { left: 166px; top: 88px; }
+    .topology-node.n-policy { left: 318px; top: 88px; }
+    .topology-node.n-service { right: 16px; top: 88px; }
+    .topology-node.n-company { left: 22px; top: 144px; }
+    .topology-node.n-team { left: 22px; top: 224px; }
+    .topology-node.n-agent { left: 22px; top: 304px; }
+    .topology-node.n-security { right: 22px; top: 168px; }
+    .topology-node.n-analytics { right: 22px; top: 248px; }
+    .topology-node.n-commission { right: 22px; top: 328px; }
+
+    .topology-stats {
+      position: absolute;
+      left: 66px;
+      right: 42px;
+      bottom: 18px;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid #d9e8fb;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(8px);
+      overflow: hidden;
+    }
+
+    .topology-stat {
+      min-height: 64px;
+      padding: 12px 18px;
+      border-right: 1px solid #d9e8fb;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 850;
+    }
+
+    .topology-stat:last-child {
+      border-right: 0;
+    }
+
+    .topology-stat small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .wave-network {
+      position: relative;
+      width: min(100%, 650px);
+      height: 500px;
+      overflow: hidden;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(9, 104, 255, 0.16), transparent 26%),
+        linear-gradient(rgba(9, 104, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(9, 104, 255, 0.05) 1px, transparent 1px),
+        rgba(255,255,255,0.78);
+      background-size: auto, 46px 46px, 46px 46px, auto;
+      box-shadow: 0 24px 55px rgba(25, 88, 180, 0.11);
+    }
+
+    .wave-network::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, transparent 0 42%, rgba(255,255,255,0.36) 50%, transparent 58% 100%);
+      animation: topology-sheen 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .wave-lines {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .wave-lines path {
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 8 10;
+      animation: dash-flow 14s linear infinite;
+    }
+
+    .wave-lines .blue-line {
+      stroke: rgba(9, 104, 255, 0.56);
+      stroke-width: 2.1;
+    }
+
+    .wave-lines .green-line {
+      stroke: rgba(18, 179, 160, 0.62);
+      stroke-width: 2.1;
+    }
+
+    .wave-lines .purple-line {
+      stroke: rgba(126, 87, 255, 0.58);
+      stroke-width: 2.1;
+    }
+
+    .wave-orbits {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      z-index: 2;
+      width: 286px;
+      height: 286px;
+      transform: translate(-50%, -50%);
+    }
+
+    .wave-orbit {
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(9, 104, 255, 0.18);
+      border-radius: 50%;
+      transform: scale(var(--scale)) rotateX(64deg) rotateZ(var(--start));
+      animation: wave-orbit 18s linear infinite;
+    }
+
+    .wave-orbit:nth-child(2) {
+      --scale: .76;
+      --start: 28deg;
+      animation-duration: 14s;
+      animation-direction: reverse;
+      border-color: rgba(18, 179, 160, 0.2);
+    }
+
+    .wave-orbit:nth-child(3) {
+      --scale: .52;
+      --start: 62deg;
+      animation-duration: 10s;
+    }
+
+    .wave-core {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      width: 92px;
+      height: 92px;
+      border: 1px solid rgba(9, 104, 255, 0.16);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.94);
+      box-shadow:
+        0 28px 54px rgba(9, 104, 255, 0.18),
+        inset 0 -14px 22px rgba(9, 104, 255, 0.06);
+      transform: translate(-50%, -50%);
+    }
+
+    .wave-core::before,
+    .wave-core::after {
+      content: "";
+      position: absolute;
+      inset: -16px;
+      border: 1px solid rgba(9, 104, 255, 0.18);
+      border-radius: 30px;
+      animation: pulse-ring 2.8s ease-out infinite;
+    }
+
+    .wave-core::after {
+      animation-delay: 1.4s;
+    }
+
+    .wave-core img {
+      width: 62px;
+      height: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wave-node {
+      position: absolute;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 158px;
+      min-height: 66px;
+      padding: 12px 14px;
+      border: 1px solid #d9e8fb;
+      border-radius: 8px;
+      color: #172642;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 14px 32px rgba(31, 88, 160, 0.09);
+      font-size: 15px;
+      font-weight: 820;
+    }
+
+    .wave-node small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .wave-node.n-client { left: 58px; top: 74px; }
+    .wave-node.n-company { left: 38px; top: 166px; }
+    .wave-node.n-team { left: 38px; top: 258px; }
+    .wave-node.n-agent { left: 58px; top: 350px; }
+    .wave-node.n-policy { right: 58px; top: 74px; }
+    .wave-node.n-commission { right: 38px; top: 166px; }
+    .wave-node.n-service { right: 38px; top: 258px; }
+    .wave-node.n-analytics { right: 58px; top: 350px; }
+
+    .wave-stats {
+      position: absolute;
+      left: 120px;
+      right: 64px;
+      bottom: 12px;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid #d9e8fb;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
+      overflow: hidden;
+    }
+
+    .wave-stat {
+      min-height: 46px;
+      padding: 7px 13px;
+      border-right: 1px solid #d9e8fb;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .wave-stat:last-child {
+      border-right: 0;
+    }
+
+    .wave-stat small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 650;
+    }
+
+    @keyframes ring-spin {
+      from { transform: translate(-50%, -50%) rotate(45deg) translateZ(var(--z)) rotateZ(0deg); }
+      to { transform: translate(-50%, -50%) rotate(45deg) translateZ(var(--z)) rotateZ(360deg); }
+    }
+
+    @keyframes ring-spin-reverse {
+      from { transform: translate(-50%, -50%) rotate(45deg) translateZ(var(--z)) rotateZ(0deg); }
+      to { transform: translate(-50%, -50%) rotate(45deg) translateZ(var(--z)) rotateZ(-360deg); }
+    }
+
+    @keyframes dash-flow {
+      to { stroke-dashoffset: -180; }
+    }
+
+    @keyframes topology-sheen {
+      0%, 48%, 100% { transform: translateX(-80%); opacity: 0; }
+      55% { opacity: 1; }
+      72% { transform: translateX(80%); opacity: 0; }
+    }
+
+    @keyframes wave-orbit {
+      from { rotate: 0deg; }
+      to { rotate: 360deg; }
+    }
+
+    @keyframes pulse-ring {
+      0% { opacity: .75; transform: scale(.82); }
+      100% { opacity: 0; transform: scale(1.5); }
+    }
+
+    .slice-section {
+      padding: 28px 0 0;
+    }
+
+    .slice-frame {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: var(--shadow);
+    }
+
+    .slice-frame.flat {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .slice {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .broker-built {
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: var(--shadow);
+    }
+
+    .broker-built .section-head {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .broker-layout {
+      display: grid;
+      grid-template-columns: 238px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .broker-tabs {
+      display: grid;
+      gap: 11px;
+      align-content: start;
+    }
+
+    .broker-tab {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 11px;
+      align-items: center;
+      min-height: 68px;
+      padding: 12px;
+      border: 1px solid #dfe9f7;
+      border-radius: 8px;
+      color: #334562;
+      background: #fff;
+      text-align: left;
+      box-shadow: 0 8px 18px rgba(26, 86, 170, 0.04);
+      cursor: pointer;
+    }
+
+    .broker-tab.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, #0864ff, #147dff);
+      box-shadow: 0 14px 26px rgba(9, 104, 255, 0.24);
+    }
+
+    .broker-tab.active .topo-icon {
+      color: #fff;
+      background: rgba(255,255,255,0.16);
+    }
+
+    .broker-tab strong {
+      display: block;
+      color: inherit;
+      font-size: 15px;
+      font-weight: 820;
+    }
+
+    .broker-tab span:last-child {
+      display: block;
+      margin-top: 3px;
+      color: currentColor;
+      opacity: 0.72;
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .broker-preview {
+      overflow: hidden;
+      border: 1px solid #d9e8fb;
+      border-radius: 10px;
+      background: #f8fbff;
+      aspect-ratio: 16 / 9;
+      min-height: 0;
+      padding: 0;
+    }
+
+    .broker-preview img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .section-head {
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 28px;
+      line-height: 1.22;
+      font-weight: 840;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .module-card {
+      min-height: 220px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 12px 28px rgba(20, 82, 170, 0.07);
+    }
+
+    .module-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 820;
+    }
+
+    .module-card ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 12px;
+      row-gap: 7px;
+      list-style: none;
+      margin: 12px 0 13px;
+      padding: 0;
+      color: #43546f;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 650;
+    }
+
+    .module-card li {
+      white-space: nowrap;
+    }
+
+    .module-card li::before {
+      content: "›";
+      margin-right: 8px;
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .module-thumb {
+      position: relative;
+      height: 76px;
+      padding: 8px;
+      border: 1px solid #e2ecfa;
+      border-radius: 7px;
+      background: linear-gradient(180deg, #fbfdff, #f5faff);
+      overflow: hidden;
+    }
+
+    .module-thumb svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .thumb-lines span,
+    .thumb-table span {
+      display: block;
+      height: 10px;
+      margin-bottom: 7px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #dceaff, #f1f7ff);
+    }
+
+    .thumb-bars {
+      display: flex;
+      align-items: end;
+      gap: 7px;
+      height: 72px;
+    }
+
+    .thumb-bars span {
+      flex: 1;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(180deg, #1477ff, #95c6ff);
+    }
+
+    .thumb-calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .thumb-calendar span {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #edf5ff;
+    }
+
+    .thumb-calendar span:nth-child(18) {
+      background: var(--blue);
+    }
+
+    .module-card li::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      margin-right: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      vertical-align: 2px;
+    }
+
+    .thumb-network {
+      background:
+        linear-gradient(90deg, rgba(9,104,255,0.05) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(9,104,255,0.05) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfdff, #f5faff);
+      background-size: 24px 24px, 24px 24px, auto;
+    }
+
+    .thumb-underwriting {
+      background:
+        radial-gradient(circle at 78% 22%, rgba(20,184,166,0.14), transparent 30%),
+        linear-gradient(180deg, #fbfdff, #f5faff);
+    }
+
+    .module-grid-new + .module-grid {
+      display: none;
+    }
+
+    .app-built {
+      display: block;
+      padding: 32px 34px 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 20% 25%, rgba(9, 104, 255, 0.08), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,252,255,0.98));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .app-info h2 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 840;
+    }
+
+    .app-info > p {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .app-info > .app-content,
+    .app-info > .app-capabilities,
+    .app-built > .phone-area {
+      display: none;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 238px 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-top: 24px;
+    }
+
+    .app-shell-tabs {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .app-shell-tab {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 58px;
+      padding: 0 16px;
+      border: 1px solid #dfeaf8;
+      border-radius: 8px;
+      color: #334562;
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(26, 86, 170, 0.04);
+      font-size: 16px;
+      font-weight: 780;
+      cursor: pointer;
+      transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease, background .2s ease;
+    }
+
+    .app-shell-tab:hover {
+      border-color: #9fc6ff;
+      box-shadow: 0 12px 24px rgba(26, 86, 170, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .app-shell-tab.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, #0864ff, #147dff);
+      box-shadow: 0 14px 26px rgba(9, 104, 255, 0.24);
+    }
+
+    .app-shell-tab .topo-icon {
+      flex: 0 0 auto;
+    }
+
+    .app-shell-tab.active .topo-icon {
+      color: #fff;
+      background: rgba(255,255,255,0.17);
+    }
+
+    .app-visual {
+      position: relative;
+      border: 1px solid #d9e8fb;
+      border-radius: 10px;
+      background:
+        linear-gradient(90deg, rgba(9,104,255,0.05) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(9,104,255,0.05) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfdff, #f5faff);
+      background-size: 32px 32px, 32px 32px, auto;
+      overflow: hidden;
+    }
+
+    .app-visual img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      background: #fff;
+    }
+
+    .app-visual-inner {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .app-visual-title {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 850;
+    }
+
+    .app-visual-size {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 16px;
+      border: 1px solid #cfe2fb;
+      border-radius: 999px;
+      color: var(--blue);
+      background: rgba(255,255,255,0.86);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .app-visual-note {
+      margin: 14px auto 0;
+      max-width: 560px;
+      color: #62748f;
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    .app-content {
+      display: grid;
+      grid-template-columns: 158px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .app-tabs {
+      display: grid;
+      gap: 12px;
+    }
+
+    .app-tab {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 58px;
+      padding: 0 16px;
+      border: 1px solid #dfeaf8;
+      border-radius: 7px;
+      color: #334562;
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(26, 86, 170, 0.04);
+      font-size: 16px;
+      font-weight: 760;
+    }
+
+    .app-tab.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, #0864ff, #147dff);
+      box-shadow: 0 14px 26px rgba(9, 104, 255, 0.24);
+    }
+
+    .app-tab .mini-icon {
+      color: var(--blue);
+      background: #edf5ff;
+    }
+
+    .app-tab.active .mini-icon {
+      color: #fff;
+      background: rgba(255,255,255,0.17);
+    }
+
+    .app-points h3 {
+      margin: 4px 0 14px;
+      color: #20314f;
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .app-points ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      color: #48607f;
+      font-size: 14px;
+      line-height: 1.9;
+      font-weight: 650;
+    }
+
+    .app-points li::before {
+      content: "✓";
+      margin-right: 9px;
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .app-points b {
+      color: var(--blue);
+    }
+
+    .app-capabilities {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .app-capability {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 58px;
+      border: 1px solid #dfeaf8;
+      border-radius: 7px;
+      background: rgba(255,255,255,0.9);
+      color: #2d405f;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .app-capability small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .phone-area {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+      align-items: end;
+      min-height: 420px;
+    }
+
+    .phone-block {
+      text-align: center;
+    }
+
+    .phone-title {
+      margin-bottom: 8px;
+      color: #52617c;
+      font-size: 14px;
+      font-weight: 780;
+    }
+
+    .phone {
+      position: relative;
+      width: 184px;
+      height: 382px;
+      margin: 0 auto;
+      padding: 18px 10px 12px;
+      border: 6px solid #111827;
+      border-radius: 31px;
+      background: #fff;
+      box-shadow: 0 22px 38px rgba(10, 28, 64, 0.18);
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      width: 58px;
+      height: 13px;
+      border-radius: 0 0 10px 10px;
+      background: #111827;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .phone-screen {
+      height: 100%;
+      overflow: hidden;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fbfdff, #f6faff);
+      padding: 22px 12px 12px;
+      text-align: left;
+    }
+
+    .phone-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #1b2944;
+      font-size: 13px;
+      font-weight: 820;
+      margin-bottom: 12px;
+    }
+
+    .phone-search {
+      height: 28px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      background: #eef5ff;
+    }
+
+    .rate-card {
+      min-height: 76px;
+      margin-bottom: 10px;
+      padding: 11px 10px;
+      border: 1px solid #e0ebfb;
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .rate-card small {
+      display: block;
+      color: #6d7c95;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .rate-card strong {
+      display: block;
+      margin: 4px 0 6px;
+      color: #ff8a1f;
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 850;
+    }
+
+    .phone-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 22px;
+      min-width: 44px;
+      padding: 0 9px;
+      border-radius: 4px;
+      color: #fff;
+      background: var(--blue);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .client-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .client-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 30%, #ffe2c6 0 22%, transparent 23%),
+        radial-gradient(circle at 50% 64%, #1c5fbf 0 30%, transparent 31%),
+        #e8f2ff;
+      border: 1px solid #d9e8fb;
+    }
+
+    .client-name {
+      color: #1b2944;
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .client-name small {
+      color: #8a97ac;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .client-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+      margin-bottom: 16px;
+    }
+
+    .client-actions span {
+      height: 26px;
+      border-radius: 8px;
+      background: #eef5ff;
+    }
+
+    .phone-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 25px;
+      color: #43536e;
+      border-bottom: 1px solid #edf3fb;
+      font-size: 11px;
+      font-weight: 680;
+    }
+
+    .phone-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 24px;
+    }
+
+    .plan-hero {
+      display: grid;
+      place-items: center;
+      height: 82px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      color: var(--blue);
+      background: linear-gradient(180deg, #eef6ff, #dcecff);
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 860;
+    }
+
+    .plan-hero small {
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .about-built {
+      display: grid;
+      grid-template-columns: 240px repeat(5, 1fr);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 10% 18%, rgba(9,104,255,0.08), transparent 24%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248,252,255,0.98));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .about-intro,
+    .about-card {
+      min-height: 150px;
+      padding: 22px;
+      border-right: 1px solid var(--line);
+    }
+
+    .about-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card::after {
+      content: "";
+      position: absolute;
+      right: -22px;
+      bottom: -28px;
+      width: 92px;
+      height: 92px;
+      border-radius: 30px;
+      border: 1px solid rgba(9,104,255,0.12);
+      background: rgba(237,245,255,0.62);
+      transform: rotate(28deg);
+    }
+
+    .about-card:last-child {
+      border-right: 0;
+    }
+
+    .about-intro h2 {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 840;
+    }
+
+    .about-intro p,
+    .about-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+      font-weight: 600;
+    }
+
+    .about-card h3 {
+      margin: 12px 0 8px;
+      color: #172642;
+      font-size: 16px;
+      line-height: 1.35;
+      font-weight: 820;
+    }
+
+    .about-visual {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      color: var(--blue);
+      background: linear-gradient(180deg, #edf5ff, #e4f0ff);
+      box-shadow: inset 0 0 0 1px rgba(9,104,255,0.08);
+    }
+
+    .about-visual svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .about-card h3,
+    .about-card p {
+      position: relative;
+      z-index: 1;
+    }
+
+    .partners-built {
+      text-align: center;
+    }
+
+    .partner-marquee {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+      overflow: hidden;
+      padding: 2px 0;
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+
+    .partner-track {
+      display: flex;
+      gap: 14px;
+      width: max-content;
+      animation: partner-scroll-left 38s linear infinite;
+    }
+
+    .partner-track.reverse {
+      animation-name: partner-scroll-right;
+      animation-duration: 42s;
+    }
+
+    .partner-marquee:hover .partner-track {
+      animation-play-state: paused;
+    }
+
+    .partner-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      width: 176px;
+      min-height: 62px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: #263955;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(20, 82, 170, 0.04);
+      text-align: left;
+      font-size: 13px;
+      font-weight: 820;
+      flex: 0 0 auto;
+    }
+
+    .partner-logo img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      border-radius: 7px;
+      background: #f5f9ff;
+    }
+
+    .partner-logo span {
+      display: block;
+      line-height: 1.25;
+    }
+
+    .partner-logo small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 650;
+    }
+
+    @keyframes partner-scroll-left {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(-50% - 7px)); }
+    }
+
+    @keyframes partner-scroll-right {
+      from { transform: translateX(calc(-50% - 7px)); }
+      to { transform: translateX(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .partner-track {
+        animation: none;
+      }
+    }
+
+    .services-built {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.96);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .service-card {
+      min-height: 290px;
+      padding: 24px;
+      border-right: 1px solid var(--line);
+    }
+
+    .service-card:nth-child(2n),
+    .service-card:last-child {
+      border-right: 0;
+    }
+
+    .service-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 6px;
+    }
+
+    .service-head h3 {
+      margin-bottom: 0;
+    }
+
+    .service-card h3 {
+      margin: 0 0 6px;
+      color: var(--ink);
+      font-size: 21px;
+      font-weight: 840;
+    }
+
+    .service-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .calc-row {
+      display: grid;
+      grid-template-columns: 92px 1fr 38px;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+      color: #465875;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .fake-input {
+      height: 36px;
+      padding: 0 12px;
+      border: 1px solid #d8e5f7;
+      border-radius: 5px;
+      color: #15233e;
+      background: #fbfdff;
+      text-align: right;
+      font-weight: 780;
+    }
+
+    .roi-number {
+      margin: 8px 0 14px;
+      color: var(--blue);
+      font-size: 30px;
+      font-weight: 880;
+    }
+
+    .faq-search {
+      display: flex;
+      align-items: center;
+      height: 42px;
+      padding: 0 8px 0 13px;
+      border: 1px solid #d8e5f7;
+      border-radius: 6px;
+      color: #8795ac;
+      background: #fbfdff;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .faq-search input {
+      width: 100%;
+      border: 0;
+      outline: none;
+      color: var(--ink);
+      background: transparent;
+      font: inherit;
+    }
+
+    .faq-search button {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border: 0;
+      border-radius: 6px;
+      color: var(--blue);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .faq-list {
+      list-style: none;
+      margin: 14px 0 17px;
+      padding: 0;
+    }
+
+    .faq-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 30px;
+      border-bottom: 1px solid #edf3fb;
+      color: #2b3d5b;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .faq-list a,
+    .faq-list button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 30px;
+      padding: 0;
+      border: 0;
+      color: inherit;
+      background: transparent;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .faq-list a {
+      text-decoration: none;
+    }
+
+    .more-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 12px;
+      margin-bottom: 13px;
+      width: 100%;
+      border: 0;
+      color: inherit;
+      background: transparent;
+      text-align: left;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .news-img {
+      height: 58px;
+      border-radius: 7px;
+      background:
+        linear-gradient(135deg, rgba(9, 104, 255, 0.2), rgba(9, 20, 48, 0.12)),
+        linear-gradient(135deg, #78bdff, #10366c);
+    }
+
+    .news-img-tech {
+      background:
+        radial-gradient(circle at 50% 50%, #86f3ff, transparent 22%),
+        linear-gradient(135deg, #073874, #07142f);
+    }
+
+    .news-img-practice {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.18), rgba(9,104,255,0.22)),
+        linear-gradient(135deg, #b7cdea, #1e3d6f);
+    }
+
+    .news-tag {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 820;
+    }
+
+    .news-title {
+      margin: 4px 0;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .news-date {
+      color: #8290a7;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .news-title-list {
+      margin-top: 14px;
+    }
+
+    .booking-list {
+      list-style: none;
+      margin: 14px 0 24px;
+      padding: 0;
+      color: #354765;
+      font-size: 14px;
+      line-height: 2.15;
+      font-weight: 700;
+    }
+
+    .booking-list li::before {
+      content: "✓";
+      margin-right: 9px;
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .demo-card {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 34px;
+      min-height: 330px;
+      padding: 32px;
+      border-top: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 10% 74%, rgba(9,104,255,0.12), transparent 24%),
+        linear-gradient(180deg, #fbfdff, #f7fbff);
+    }
+
+    .demo-intro h3 {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 860;
+    }
+
+    .demo-intro p {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    .demo-benefits {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .demo-benefit {
+      min-height: 64px;
+      padding: 12px;
+      border-left: 1px solid #dce9fb;
+      color: #51617a;
+      font-size: 12px;
+      font-weight: 720;
+    }
+
+    .demo-benefit b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 860;
+    }
+
+    .demo-illustration {
+      width: 210px;
+      height: 150px;
+      margin-top: 22px;
+      color: var(--blue);
+      opacity: 0.92;
+    }
+
+    .demo-form {
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      padding: 24px;
+      border: 1px solid #dce9fb;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.86);
+      box-shadow: 0 16px 36px rgba(20, 82, 170, 0.08);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px 16px;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 7px;
+      color: #31435f;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .required {
+      color: #e5484d;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      min-height: 42px;
+      padding: 0 12px;
+      border: 1px solid #d8e5f7;
+      border-radius: 6px;
+      color: var(--ink);
+      background: #fbfdff;
+      font: inherit;
+      font-weight: 650;
+      outline: none;
+    }
+
+    .form-field textarea {
+      min-height: 78px;
+      padding-top: 11px;
+      resize: vertical;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: #8dbdff;
+      box-shadow: 0 0 0 3px rgba(9,104,255,0.1);
+    }
+
+    .content-page {
+      display: none;
+      min-height: calc(100vh - 130px);
+      padding: 28px 0 0;
+    }
+
+    .content-page.active {
+      display: block;
+    }
+
+    .content-panel {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.97);
+      box-shadow: var(--shadow);
+    }
+
+    .content-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 16px;
+      border: 1px solid #cfe2fb;
+      border-radius: 7px;
+      color: var(--blue);
+      background: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .content-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .content-list button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 58px;
+      padding: 0 16px;
+      border: 1px solid #dfeaf8;
+      border-radius: 8px;
+      color: #172642;
+      background: #fbfdff;
+      text-align: left;
+      font: inherit;
+      font-weight: 760;
+      cursor: pointer;
+    }
+
+    .content-detail {
+      margin-top: 16px;
+      color: #40526f;
+      font-size: 15px;
+      line-height: 1.9;
+      font-weight: 600;
+    }
+
+    .empty-state {
+      display: grid;
+      place-items: center;
+      min-height: 190px;
+      margin-top: 18px;
+      border: 1px dashed #cfe2fb;
+      border-radius: 10px;
+      color: var(--muted);
+      background: #fbfdff;
+      font-weight: 760;
+    }
+
+    .footer-note {
+      padding: 34px 0 42px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 960px) {
+      .container {
+        width: min(100%, calc(100vw - 28px));
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .brand,
+      .brand img {
+        width: 150px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 38px;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .hero h2 {
+        font-size: 21px;
+      }
+
+      .hero-art {
+        justify-content: center;
+      }
+
+      .topology-3d {
+        width: 650px;
+        transform: scale(0.78);
+        transform-origin: top center;
+        margin-bottom: -96px;
+      }
+
+      .wave-network {
+        width: 650px;
+        transform: scale(0.78);
+        transform-origin: top center;
+        margin-bottom: -96px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-actions .lang {
+        display: none;
+      }
+
+      .app-built,
+      .app-content,
+      .app-shell,
+      .about-built,
+      .services-built,
+      .demo-card,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .app-capabilities {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .phone-area {
+        grid-template-columns: 1fr;
+      }
+
+      .module-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .partner-logos {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .about-intro,
+      .about-card,
+      .service-card {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="#top" aria-label="BeeFintech 首页">
+          <img src="assets/brand/beefintech-logo@4x.png" alt="BeeFintech" />
+        </a>
+
+        <nav class="nav" aria-label="主导航">
+          <a class="nav-item" href="#broker" data-i18n="nav.product">产品能力</a>
+          <a class="nav-item" href="#app" data-i18n="nav.app">APP移动端</a>
+          <a class="nav-item" href="#about" data-i18n="nav.about">关于我们</a>
+          <a class="nav-item" href="#partners" data-i18n="nav.partners">合作伙伴</a>
+          <a class="nav-item" href="#services" data-i18n="nav.support">服务支持</a>
+        </nav>
+
+        <div class="nav-actions">
+          <div class="lang" id="languageSwitcher">
+            <span><span data-i18n="lang.current">简体中文</span> <span class="chevron">▾</span></span>
+            <div class="language-menu" aria-label="语言切换">
+              <button class="language-option active" type="button" data-lang="zh-CN">简体中文</button>
+              <button class="language-option" type="button" data-lang="zh-HK">繁体中文</button>
+              <button class="language-option" type="button" data-lang="en">English</button>
+            </div>
+          </div>
+          <a class="btn" href="#booking" data-i18n="nav.cta">预约演示 →</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <div class="badge"><span class="mini-icon">◇</span><span data-i18n="hero.badge">保险数据网络&nbsp;&nbsp;Insurance Data Network</span></div>
+            <h1 data-i18n-html="hero.title">连接保险公司、<br />经纪渠道与客户服务</h1>
+            <h2 data-i18n="hero.subtitle">香港保险展业全链条保险经纪业务管理系统</h2>
+            <p data-i18n="hero.copy">通过标准化数据连接与智能流程，贯通保险业务全链条，提升效率、降低成本、促进增长。</p>
+
+            <div class="hero-actions">
+              <a class="btn" href="#booking" data-i18n="nav.cta">预约演示 →</a>
+            </div>
+
+            <div class="proofs">
+              <span class="proof"><span class="proof-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.8 7.7-7 9-4.2-1.3-7-4.4-7-9V6l7-3Z"></path><path d="m9 12 2 2 4-5"></path></svg></span><span data-i18n="proof.security">安全合规</span></span>
+              <span class="proof"><span class="proof-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="12" r="3"></circle><circle cx="17" cy="7" r="3"></circle><circle cx="17" cy="17" r="3"></circle><path d="m9.7 10.7 4.6-2.4M9.7 13.3l4.6 2.4"></path></svg></span><span data-i18n="proof.open">开放连接</span></span>
+              <span class="proof"><span class="proof-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-4"></path><path d="M4 13a8 8 0 0 0 14.9 4"></path><path d="M5 3v4h4"></path><path d="M19 21v-4h-4"></path></svg></span><span data-i18n="proof.sync">实时同步</span></span>
+              <span class="proof"><span class="proof-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3"></path><path d="M12 18v3"></path><path d="M3 12h3"></path><path d="M18 12h3"></path><path d="m5.6 5.6 2.1 2.1"></path><path d="m16.3 16.3 2.1 2.1"></path><path d="m18.4 5.6-2.1 2.1"></path><path d="m7.7 16.3-2.1 2.1"></path><circle cx="12" cy="12" r="3.5"></circle></svg></span><span data-i18n="proof.auto">智能自动化</span></span>
+            </div>
+          </div>
+
+          <div class="hero-art" aria-label="保险数据网络示意图">
+            <div class="wave-network">
+              <svg class="wave-lines" viewBox="0 0 650 500" aria-hidden="true">
+                <path class="blue-line" d="M326 230 C250 172 184 112 138 106"></path>
+                <path class="blue-line" d="M326 242 C238 210 184 198 124 198"></path>
+                <path class="blue-line" d="M326 254 C232 252 182 290 124 290"></path>
+                <path class="blue-line" d="M326 266 C246 326 184 388 138 382"></path>
+                <path class="green-line" d="M326 230 C402 172 466 112 512 106"></path>
+                <path class="green-line" d="M326 242 C420 206 466 198 526 198"></path>
+                <path class="green-line" d="M326 254 C418 252 466 290 526 290"></path>
+                <path class="green-line" d="M326 266 C402 326 466 388 512 382"></path>
+              </svg>
+
+              <div class="wave-orbits">
+                <span class="wave-orbit" style="--scale:1;--start:0deg;"></span>
+                <span class="wave-orbit"></span>
+                <span class="wave-orbit"></span>
+              </div>
+              <div class="wave-core"><img src="assets/brand/beefintech-mark-clean@4x.png" alt="" /></div>
+
+              <div class="wave-node n-client"><span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"></circle><path d="M5 21a7 7 0 0 1 14 0"></path></svg></span><div>客户<small>个人 / 企业</small></div></div>
+              <div class="wave-node n-company"><span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"></path><path d="M6 20V9l6-4 6 4v11"></path><path d="M9 20v-6h6v6"></path><path d="M9 10h.01M12 10h.01M15 10h.01"></path></svg></span><div>保险公司<small>核心系统</small></div></div>
+              <div class="wave-node n-team"><span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"></circle><circle cx="16" cy="8" r="3"></circle><path d="M3 20a5 5 0 0 1 10 0"></path><path d="M11 20a5 5 0 0 1 10 0"></path></svg></span><div>经纪团队<small>组织 / 团队</small></div></div>
+              <div class="wave-node n-agent"><span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"></circle><path d="M6 21v-2a6 6 0 0 1 12 0v2"></path><path d="M9 14l3 3 3-3"></path></svg></span><div>代理人<small>展业 / 服务</small></div></div>
+              <div class="wave-node n-policy"><span class="topo-icon green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v5h5"></path><path d="M10 13h6"></path><path d="M10 17h5"></path></svg></span><div>保单<small>投保 / 承保</small></div></div>
+              <div class="wave-node n-commission"><span class="topo-icon green"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10"></path><path d="M15 9.5A3 3 0 0 0 12 8c-1.7 0-3 1-3 2.3 0 3.4 6 1.4 6 4.8 0 1.3-1.3 2.3-3 2.3a3.4 3.4 0 0 1-3.2-1.9"></path></svg></span><div>保全核算<small>对账 / 结算</small></div></div>
+              <div class="wave-node n-service"><span class="topo-icon green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"></path><path d="M4 13v4a2 2 0 0 0 2 2h2v-7H4Z"></path><path d="M20 13v4a2 2 0 0 1-2 2h-2v-7h4Z"></path></svg></span><div>任务服务<small>工单 / 理赔</small></div></div>
+              <div class="wave-node n-analytics"><span class="topo-icon green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="m7 15 4-4 3 3 5-7"></path></svg></span><div>数据分析<small>洞察 / 预测</small></div></div>
+
+              <div class="wave-stats">
+                <div class="wave-stat">300+<small>系统连接</small></div>
+                <div class="wave-stat">99.9%<small>数据成功同步</small></div>
+                <div class="wave-stat">实时<small>事件处理</small></div>
+                <div class="wave-stat">安全加密<small>端到端保护</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="broker" class="slice-section">
+        <div class="container">
+          <div class="broker-built">
+            <div class="section-head">
+              <h2 data-i18n="broker.title">保险经纪业务管理系统</h2>
+              <p data-i18n="broker.copy">覆盖销售、签单、服务、运营与佣金管理的全链路数字化平台</p>
+            </div>
+            <div class="broker-layout">
+              <div class="broker-tabs" role="tablist" aria-label="保险经纪业务管理系统">
+                <button class="broker-tab active" type="button" data-preview="assets/system-tabs/sales-marketing.png">
+                  <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5"></path><path d="M4 19h16"></path><path d="m7 15 4-4 3 3 5-7"></path></svg></span>
+                  <span><strong>销售工具系统</strong><span>产品库、对比、计划书、试算</span></span>
+                </button>
+                <button class="broker-tab" type="button" data-preview="assets/system-tabs/signing-marketing.png">
+                  <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v5h5"></path><path d="M9 16l2 2 4-5"></path></svg></span>
+                  <span><strong>签单系统</strong><span>预约签单、新单跟进</span></span>
+                </button>
+                <button class="broker-tab" type="button" data-preview="assets/system-tabs/policy-marketing.png">
+                  <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6z"></path><path d="M9 8h6"></path><path d="M9 12h6"></path><path d="M9 16h4"></path></svg></span>
+                  <span><strong>保单服务系统</strong><span>工单管理、保单汇总、到期提醒</span></span>
+                </button>
+                <button class="broker-tab" type="button" data-preview="assets/system-tabs/operations-marketing.png">
+                  <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16"></path><path d="M8 4v16"></path><path d="M16 4v16"></path><path d="M4 16h16"></path></svg></span>
+                  <span><strong>运营工具系统</strong><span>名片分享、客户关怀、渠道管理</span></span>
+                </button>
+                <button class="broker-tab" type="button" data-preview="assets/system-tabs/commission-marketing.png">
+                  <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10"></path><path d="M15 9.5A3 3 0 0 0 12 8c-1.7 0-3 1-3 2.3 0 3.4 6 1.4 6 4.8 0 1.3-1.3 2.3-3 2.3a3.4 3.4 0 0 1-3.2-1.9"></path></svg></span>
+                  <span><strong>佣金管理系统</strong><span>佣金核算、分级发放、团队分析</span></span>
+                </button>
+              </div>
+              <div class="broker-preview">
+                <img id="brokerPreview" src="assets/system-tabs/sales-marketing.png" alt="销售工具系统示意图" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slice-section">
+        <div class="container">
+          <div class="section-head">
+            <h2 data-i18n="modules.title">核心功能模块</h2>
+            <p data-i18n="modules.copy">模块化能力，灵活组合，满足不同规模与发展阶段的业务需求</p>
+          </div>
+          <div class="module-grid module-grid-new">
+            <article class="module-card">
+              <div class="module-title">
+                <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path><circle cx="8" cy="5" r="2"></circle><circle cx="15" cy="12" r="2"></circle><circle cx="10" cy="19" r="2"></circle></svg></span>
+                功能管理
+              </div>
+              <ul><li>权限配置</li><li>角色权限</li><li>组织管理</li><li>通知设置</li></ul>
+              <div class="module-thumb">
+                <svg viewBox="0 0 220 118" role="img" aria-label="功能管理示意图">
+                  <rect x="10" y="12" width="62" height="94" rx="8" fill="#0f2a4d"/>
+                  <rect x="22" y="28" width="38" height="8" rx="4" fill="#2b83ff"/>
+                  <rect x="22" y="48" width="30" height="7" rx="3.5" fill="#6ea9ff"/>
+                  <rect x="22" y="68" width="34" height="7" rx="3.5" fill="#6ea9ff"/>
+                  <rect x="88" y="16" width="120" height="24" rx="7" fill="#eef6ff"/>
+                  <rect x="88" y="50" width="120" height="24" rx="7" fill="#eef6ff"/>
+                  <rect x="88" y="84" width="120" height="24" rx="7" fill="#eef6ff"/>
+                  <circle cx="104" cy="28" r="5" fill="#1677ff"/>
+                  <circle cx="104" cy="62" r="5" fill="#14b8a6"/>
+                  <circle cx="104" cy="96" r="5" fill="#1677ff"/>
+                </svg>
+              </div>
+            </article>
+            <article class="module-card">
+              <div class="module-title">
+                <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10"></path><path d="M15 9.5A3 3 0 0 0 12 8c-1.7 0-3 1-3 2.3 0 3.4 6 1.4 6 4.8 0 1.3-1.3 2.3-3 2.3a3.4 3.4 0 0 1-3.2-1.9"></path></svg></span>
+                佣金管理
+              </div>
+              <ul><li>佣金方案配置</li><li>佣金核算对账</li><li>分级佣金发放</li><li>佣金统计报表</li></ul>
+              <div class="module-thumb">
+                <svg viewBox="0 0 220 118" role="img" aria-label="佣金管理示意图">
+                  <rect x="10" y="14" width="76" height="38" rx="8" fill="#eef6ff"/>
+                  <text x="24" y="38" fill="#1677ff" font-size="16" font-weight="800">1.68M</text>
+                  <rect x="10" y="66" width="76" height="38" rx="8" fill="#e9fbf7"/>
+                  <text x="27" y="90" fill="#14b8a6" font-size="16" font-weight="800">96%</text>
+                  <rect x="102" y="18" width="104" height="84" rx="8" fill="#fff" stroke="#dbe9fb"/>
+                  <path d="M116 84h76M116 64h76M116 44h76" stroke="#edf3fb"/>
+                  <path d="M120 84c18-22 30-8 44-30 12-18 20-12 34-30" fill="none" stroke="#1677ff" stroke-width="5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </article>
+            <article class="module-card">
+              <div class="module-title">
+                <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5"></path><path d="M4 20h16"></path><rect x="7" y="12" width="3" height="5"></rect><rect x="12" y="8" width="3" height="9"></rect><rect x="17" y="10" width="3" height="7"></rect></svg></span>
+                团队分析
+              </div>
+              <ul><li>业绩看板</li><li>目标管理</li><li>趋势分析</li><li>团队排名</li></ul>
+              <div class="module-thumb">
+                <svg viewBox="0 0 220 118" role="img" aria-label="团队分析示意图">
+                  <rect x="12" y="14" width="48" height="38" rx="8" fill="#eef6ff"/>
+                  <rect x="70" y="14" width="48" height="38" rx="8" fill="#eef6ff"/>
+                  <rect x="128" y="14" width="80" height="38" rx="8" fill="#e9fbf7"/>
+                  <rect x="22" y="76" width="16" height="30" rx="4" fill="#76afff"/>
+                  <rect x="48" y="58" width="16" height="48" rx="4" fill="#1677ff"/>
+                  <rect x="74" y="68" width="16" height="38" rx="4" fill="#76afff"/>
+                  <rect x="100" y="44" width="16" height="62" rx="4" fill="#1677ff"/>
+                  <rect x="126" y="62" width="16" height="44" rx="4" fill="#76afff"/>
+                  <rect x="152" y="34" width="16" height="72" rx="4" fill="#1677ff"/>
+                  <path d="M182 84h24M182 66h24M182 48h24" stroke="#91c3ff" stroke-width="6" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </article>
+            <article class="module-card">
+              <div class="module-title">
+                <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="6" r="3"></circle><circle cx="18" cy="18" r="3"></circle><path d="m8.6 10.5 6.8-3"></path><path d="m8.6 13.5 6.8 3"></path></svg></span>
+                渠道管理
+              </div>
+              <ul><li>渠道分级</li><li>政策管理</li><li>渠道协作</li><li>渠道评估</li></ul>
+              <div class="module-thumb thumb-network">
+                <svg viewBox="0 0 220 118" role="img" aria-label="渠道管理示意图">
+                  <circle cx="110" cy="58" r="18" fill="#1677ff"/>
+                  <circle cx="44" cy="32" r="14" fill="#e9fbf7" stroke="#14b8a6"/>
+                  <circle cx="42" cy="88" r="14" fill="#eef6ff" stroke="#1677ff"/>
+                  <circle cx="178" cy="30" r="14" fill="#eef6ff" stroke="#1677ff"/>
+                  <circle cx="180" cy="88" r="14" fill="#e9fbf7" stroke="#14b8a6"/>
+                  <path d="M58 36 94 52M56 84l38-18M126 52l38-16M126 66l40 18" stroke="#6aa6ff" stroke-width="3" stroke-dasharray="6 6"/>
+                  <rect x="82" y="92" width="56" height="12" rx="6" fill="#eef6ff"/>
+                </svg>
+              </div>
+            </article>
+            <article class="module-card">
+              <div class="module-title">
+                <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 2.9 8.4 7 10 4.1-1.6 7-5.5 7-10V6z"></path><path d="m9 12 2 2 4-5"></path></svg></span>
+                预核保系统
+              </div>
+              <ul><li>智能问卷</li><li>健康风险识别</li><li>风险评估</li><li>结果输出</li></ul>
+              <div class="module-thumb thumb-underwriting">
+                <svg viewBox="0 0 220 118" role="img" aria-label="预核保系统示意图">
+                  <rect x="12" y="18" width="92" height="82" rx="9" fill="#fff" stroke="#dbe9fb"/>
+                  <path d="M28 40h54M28 58h42M28 76h50" stroke="#cfe0f5" stroke-width="7" stroke-linecap="round"/>
+                  <circle cx="146" cy="58" r="36" fill="#e9fbf7"/>
+                  <path d="M146 30 120 42v20c0 18 12 30 26 36 14-6 26-18 26-36V42z" fill="#14b8a6" opacity=".18" stroke="#14b8a6" stroke-width="3"/>
+                  <path d="m132 58 10 10 20-24" fill="none" stroke="#14b8a6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="174" y="78" width="34" height="10" rx="5" fill="#1677ff" opacity=".25"/>
+                </svg>
+              </div>
+            </article>
+          </div>
+          <div class="module-grid">
+            <article class="module-card">
+              <div class="module-title"><span class="mini-icon">▣</span>功能管理</div>
+              <ul><li>权限配置</li><li>角色权限</li><li>组织管理</li><li>通知设置</li></ul>
+              <div class="module-thumb thumb-lines"><span style="width:90%"></span><span style="width:72%"></span><span style="width:82%"></span><span style="width:58%"></span></div>
+            </article>
+            <article class="module-card">
+              <div class="module-title"><span class="mini-icon">$</span>佣金管理</div>
+              <ul><li>佣金方案配置</li><li>佣金核算对账</li><li>分级佣金发放</li><li>佣金统计报表</li></ul>
+              <div class="module-thumb thumb-table"><span style="width:88%"></span><span style="width:76%"></span><span style="width:94%"></span><span style="width:68%"></span></div>
+            </article>
+            <article class="module-card">
+              <div class="module-title"><span class="mini-icon">▥</span>业绩分析</div>
+              <ul><li>业绩看板</li><li>目标管理</li><li>趋势分析</li><li>团队排名</li></ul>
+              <div class="module-thumb thumb-bars"><span style="height:38%"></span><span style="height:58%"></span><span style="height:46%"></span><span style="height:74%"></span><span style="height:66%"></span><span style="height:88%"></span></div>
+            </article>
+            <article class="module-card">
+              <div class="module-title"><span class="mini-icon">⌁</span>渠道管理</div>
+              <ul><li>渠道分级</li><li>政策管理</li><li>渠道协作</li><li>渠道评估</li></ul>
+              <div class="module-thumb thumb-table"><span style="width:100%;background:#10284d"></span><span style="width:86%"></span><span style="width:74%"></span><span style="width:91%"></span></div>
+            </article>
+            <article class="module-card">
+              <div class="module-title"><span class="mini-icon">△</span>预核保系统</div>
+              <ul><li>智能问卷</li><li>健康风险识别</li><li>风险评估</li><li>结果输出</li></ul>
+              <div class="module-thumb thumb-table"><span style="width:88%"></span><span style="width:56%;background:#dff8f2"></span><span style="width:82%"></span><span style="width:68%;background:#dff8f2"></span></div>
+            </article>
+            <article class="module-card">
+              <div class="module-title"><span class="mini-icon">▤</span>预约签单</div>
+              <ul><li>在线预约</li><li>电子签名</li><li>资料收集</li><li>进度跟踪</li></ul>
+              <div class="module-thumb thumb-calendar"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="app" class="slice-section">
+        <div class="container">
+          <div class="app-built">
+            <div class="app-info">
+              <h2 data-i18n="app.title">LifeBee APP 移动拓客工具</h2>
+              <p data-i18n="app.copy">移动办公，随时随地，高效追踪客户</p>
+              <div class="app-shell">
+                <div class="app-shell-tabs" role="tablist" aria-label="LifeBee APP 功能">
+                  <button class="app-shell-tab active" type="button" data-app-tab="多端同步" data-app-image="assets/app-tabs/sync.png">
+                    <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10"></path><path d="M10 3l4 4-4 4"></path><path d="M20 17H10"></path><path d="m14 13-4 4 4 4"></path></svg></span>
+                    <span>多端同步</span>
+                  </button>
+                  <button class="app-shell-tab" type="button" data-app-tab="产品库" data-app-image="assets/app-tabs/product-library.png">
+                    <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"></path><path d="M8 9h8"></path><path d="M8 13h5"></path></svg></span>
+                    <span>产品库</span>
+                  </button>
+                  <button class="app-shell-tab" type="button" data-app-tab="产品对比" data-app-image="assets/app-tabs/product-compare.png">
+                    <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16"></path><path d="M17 4v16"></path><path d="M4 8h6"></path><path d="M14 16h6"></path></svg></span>
+                    <span>产品对比</span>
+                  </button>
+                  <button class="app-shell-tab" type="button" data-app-tab="保费试算" data-app-image="assets/app-tabs/premium-calculator.png">
+                    <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18H6z"></path><path d="M9 8h6"></path><path d="M9 12h2"></path><path d="M13 12h2"></path><path d="M9 16h2"></path><path d="M13 16h2"></path></svg></span>
+                    <span>保费试算</span>
+                  </button>
+                  <button class="app-shell-tab" type="button" data-app-tab="客户管理" data-app-image="assets/app-tabs/client-management.png">
+                    <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"></circle><path d="M5 21a7 7 0 0 1 14 0"></path></svg></span>
+                    <span>客户管理</span>
+                  </button>
+                  <button class="app-shell-tab" type="button" data-app-tab="名片分享" data-app-image="assets/app-tabs/business-card.png">
+                    <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v10H4z"></path><circle cx="9" cy="12" r="2"></circle><path d="M13 11h4"></path><path d="M13 14h3"></path></svg></span>
+                    <span>名片分享</span>
+                  </button>
+                  <button class="app-shell-tab" type="button" data-app-tab="消息中心" data-app-image="assets/app-tabs/message-center.png">
+                    <span class="topo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v11H8l-4 4z"></path><path d="M8 10h8"></path><path d="M8 14h5"></path></svg></span>
+                    <span>消息中心</span>
+                  </button>
+                </div>
+                <div class="app-visual" aria-label="APP 功能图片">
+                  <img id="appVisualImage" src="assets/app-tabs/sync.png" alt="多端同步功能图" />
+                </div>
+              </div>
+              <div class="app-content">
+                <div class="app-tabs">
+                  <div class="app-tab active"><span class="mini-icon">▣</span><span data-i18n="app.tab.mobile">移动展业</span></div>
+                  <div class="app-tab"><span class="mini-icon">♙</span><span data-i18n="app.tab.client">客户管理</span></div>
+                  <div class="app-tab"><span class="mini-icon">▤</span><span data-i18n="app.tab.plan">计划书生成</span></div>
+                  <div class="app-tab"><span class="mini-icon">↻</span><span data-i18n="app.tab.sync">消息与同步</span></div>
+                </div>
+                <div class="app-points">
+                  <h3 data-i18n="app.pointsTitle">随时随地开展业务，提升展业效率</h3>
+                  <ul>
+                    <li><b>多端同步：</b>数据三端同步，电脑与手机无缝协作</li>
+                    <li><b>产品库：</b>海量产品实时更新，快速了解保障方案</li>
+                    <li><b>产品对比：</b>多维智能对比，精准匹配客户需求</li>
+                    <li><b>保费试算：</b>灵活试算保费，支持多种缴费方式</li>
+                    <li><b>名片分享：</b>一键生成电子名片，快速分享获客</li>
+                    <li><b>消息中心：</b>重要通知与客户消息集中管理</li>
+                    <li><b>移动办公：</b>随时查看日程与任务，移动处理业务</li>
+                    <li><b>随时跟进客户：</b>客户动态提醒，不错过商机</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="app-capabilities">
+                <div class="app-capability"><span class="mini-icon">↻</span><div>多端同步<small>数据互通一体</small></div></div>
+                <div class="app-capability"><span class="mini-icon">▣</span><div>产品库<small>实时更新</small></div></div>
+                <div class="app-capability"><span class="mini-icon">⌁</span><div>产品对比<small>智能匹配</small></div></div>
+                <div class="app-capability"><span class="mini-icon">◎</span><div>保费试算<small>多方案试算</small></div></div>
+                <div class="app-capability"><span class="mini-icon">✉</span><div>消息中心<small>集中管理</small></div></div>
+              </div>
+            </div>
+
+            <div class="phone-area" aria-label="LifeBee APP 三个手机界面">
+              <div class="phone-block">
+                <div class="phone-title">产品库列表</div>
+                <div class="phone">
+                  <div class="phone-screen">
+                    <div class="phone-head"><span>产品库</span><span>⌕</span></div>
+                    <div class="phone-search"></div>
+                    <div class="rate-card"><small>香港储蓄保障计划</small><strong>5.20%</strong><span class="phone-pill">查看</span></div>
+                    <div class="rate-card"><small>教育储蓄保险计划</small><strong>4.80%</strong><span class="phone-pill">查看</span></div>
+                    <div class="rate-card"><small>医疗保障计划</small><strong>3.50%</strong><span class="phone-pill">查看</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="phone-block">
+                <div class="phone-title">客户详情</div>
+                <div class="phone">
+                  <div class="phone-screen">
+                    <div class="client-top"><span class="client-avatar"></span><div class="client-name">郭先生<br /><small>+852 1234 5678</small></div></div>
+                    <div class="client-actions"><span></span><span></span><span></span><span></span></div>
+                    <div class="phone-row"><span>客户保单</span><b>3</b></div>
+                    <div class="phone-row"><span>保单数量</span><b>12</b></div>
+                    <div class="phone-row"><span>跟进记录</span><b>2</b></div>
+                    <div class="phone-row"><span>待办事项</span><b>2</b></div>
+                    <div class="phone-row"><span>合同资料</span><b>3</b></div>
+                    <div class="phone-actions"><span class="phone-pill" style="height:34px;">电话</span><span class="phone-pill" style="height:34px;">发消息</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="phone-block">
+                <div class="phone-title">计划书 / 保费试算</div>
+                <div class="phone">
+                  <div class="phone-screen">
+                    <div class="plan-hero">尊享储蓄计划<br /><small>计划书</small></div>
+                    <div class="phone-row"><span>投保人</span><b>郭先生</b></div>
+                    <div class="phone-row"><span>被保人</span><b>郭女士</b></div>
+                    <div class="phone-row"><span>缴费期</span><b>5 年</b></div>
+                    <div class="phone-row"><span>保障期间</span><b>10 年</b></div>
+                    <div class="phone-row"><span>首年保费</span><b>100,000 HKD</b></div>
+                    <div class="phone-row"><span>预计收益</span><b>+5.20%</b></div>
+                    <span class="phone-pill" style="width:100%;height:34px;margin-top:24px;">立即制作计划书</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="slice-section">
+        <div class="container">
+          <div class="about-built">
+            <div class="about-intro">
+              <h2 data-i18n="about.title">关于 BeeFintech</h2>
+              <p data-i18n="about.copy">面向保险经纪及生态伙伴的一站式保险科技 PaaS 平台。</p>
+            </div>
+            <div class="about-card"><span class="about-visual"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5"></path><path d="M5 5h12l-2 4 2 4H5"></path></svg></span><h3>2017 成立</h3><p>专注保险科技数字化服务，服务香港保险经纪业务场景。</p></div>
+            <div class="about-card"><span class="about-visual"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"></path><path d="M6 20V9l6-5 6 5v11"></path><path d="M9 20v-6h6v6"></path><path d="M9 10h.01M12 10h.01M15 10h.01"></path></svg></span><h3>香港科技园 / 腾讯孵化器</h3><p>连接保险机构、经纪团队与生态伙伴资源。</p></div>
+            <div class="about-card"><span class="about-visual"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="13" height="10" rx="2"></rect><path d="M8 19h5"></path><path d="M10.5 15v4"></path><rect x="18" y="8" width="3" height="9" rx="1"></rect></svg></span><h3>PC + APP 双端</h3><p>支持 PC 管理端与移动 APP，协同覆盖展业全流程。</p></div>
+            <div class="about-card"><span class="about-visual"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 7v10l7 4 7-4V7z"></path><path d="M12 12 5.5 8.2"></path><path d="M12 12l6.5-3.8"></path><path d="M12 12v8"></path></svg></span><h3>保险全链条数字化</h3><p>覆盖客户服务、保单处理、渠道协作与数据连接。</p></div>
+            <div class="about-card"><span class="about-visual"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 2.9 8.4 7 10 4.1-1.6 7-5.5 7-10V6z"></path><path d="M9 12h6"></path><path d="M12 9v6"></path></svg></span><h3>金融保险 + 技术团队</h3><p>由保险、精算与互联网技术背景成员共同打造。</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="partners" class="slice-section">
+        <div class="container">
+          <div class="partners-built">
+            <div class="section-head">
+              <h2 data-i18n="partners.title">合作伙伴生态</h2>
+              <p data-i18n="partners.copy">连接保险公司、经纪渠道、技术服务商与企业客户，构建开放协同伙伴生态。</p>
+            </div>
+            <div class="partner-marquee" aria-label="香港保险公司与保险经纪合作伙伴">
+              <div class="partner-track">
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=aia.com.hk" alt="" /><span>AIA 友邦<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=prudential.com.hk" alt="" /><span>Prudential 保诚<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=manulife.com.hk" alt="" /><span>Manulife 宏利<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=axa.com.hk" alt="" /><span>AXA 安盛<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=fwd.com.hk" alt="" /><span>FWD 富卫<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=sunlife.com.hk" alt="" /><span>Sun Life 永明<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=hsbclife.com.hk" alt="" /><span>HSBC Life<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=bowtie.com.hk" alt="" /><span>Bowtie 保泰<small>虚拟保险</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=aia.com.hk" alt="" /><span>AIA 友邦<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=prudential.com.hk" alt="" /><span>Prudential 保诚<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=manulife.com.hk" alt="" /><span>Manulife 宏利<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=axa.com.hk" alt="" /><span>AXA 安盛<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=fwd.com.hk" alt="" /><span>FWD 富卫<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=sunlife.com.hk" alt="" /><span>Sun Life 永明<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=hsbclife.com.hk" alt="" /><span>HSBC Life<small>保险公司</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=bowtie.com.hk" alt="" /><span>Bowtie 保泰<small>虚拟保险</small></span></div>
+              </div>
+              <div class="partner-track reverse">
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=pacificprime.hk" alt="" /><span>Pacific Prime<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=kwiksure.com" alt="" /><span>Kwiksure<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=ccw-global.com" alt="" /><span>CCW Global<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=lockton.com" alt="" /><span>Lockton<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=howdengroup.com" alt="" /><span>Howden<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=marsh.com" alt="" /><span>Marsh<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=aon.com" alt="" /><span>Aon<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=wtwco.com" alt="" /><span>WTW<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=pacificprime.hk" alt="" /><span>Pacific Prime<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=kwiksure.com" alt="" /><span>Kwiksure<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=ccw-global.com" alt="" /><span>CCW Global<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=lockton.com" alt="" /><span>Lockton<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=howdengroup.com" alt="" /><span>Howden<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=marsh.com" alt="" /><span>Marsh<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=aon.com" alt="" /><span>Aon<small>保险经纪</small></span></div>
+                <div class="partner-logo"><img src="https://www.google.com/s2/favicons?sz=64&domain=wtwco.com" alt="" /><span>WTW<small>保险经纪</small></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="slice-section">
+        <div class="container">
+          <div class="services-built">
+            <div class="service-card">
+              <div class="service-head">
+                <h3 data-i18n="faq.title">FAQ 自助查询</h3>
+                <a class="more-link" href="faq.html">查看更多 →</a>
+              </div>
+              <p data-i18n="faq.copy">快速找到您关心的问题</p>
+              <form class="faq-search" action="faq-search.html" method="get">
+                <input name="q" type="search" placeholder="搜索问题..." />
+                <button type="submit" aria-label="搜索 FAQ">⌕</button>
+              </form>
+              <ul class="faq-list" id="homeFaqList">
+                <li><a href="faq-detail.html?id=security">平台如何保障数据安全？ <span>›</span></a></li>
+                <li><a href="faq-detail.html?id=commission">佣金结算如何保证准确？ <span>›</span></a></li>
+                <li><a href="faq-detail.html?id=integration">支持哪些对接方式？ <span>›</span></a></li>
+                <li><a href="faq-detail.html?id=insurers">系统支持哪些保险公司？ <span>›</span></a></li>
+              </ul>
+            </div>
+
+            <div class="service-card">
+              <div class="service-head">
+                <h3 data-i18n="news.title">保险科技资讯</h3>
+                <a class="more-link" href="news.html" data-i18n="news.more">查看更多 →</a>
+              </div>
+              <div id="homeNewsList">
+                <a class="news-item" href="news-detail.html?id=trend"><div class="news-img"></div><div><div class="news-tag">行业洞察</div><div class="news-title">香港保险业数字化趋势与机遇</div><div class="news-date">2026-05-20</div></div></a>
+                <a class="news-item" href="news-detail.html?id=release"><div class="news-img news-img-tech"></div><div><div class="news-tag">产品动态</div><div class="news-title">BeeFintech 平台 2024 春季更新</div><div class="news-date">2026-05-15</div></div></a>
+                <a class="news-item" href="news-detail.html?id=practice"><div class="news-img news-img-practice"></div><div><div class="news-tag">最佳实践</div><div class="news-title">数字化如何提升经纪业务生产力</div><div class="news-date">2026-05-08</div></div></a>
+              </div>
+            </div>
+
+            <div id="booking" class="demo-card">
+              <div class="demo-intro">
+                <h3 data-i18n="booking.title">预约产品演示</h3>
+                <p data-i18n="booking.copy">专业方案顾问将为您梳理保险经纪业务流程，演示 BeeFintech 如何覆盖销售、签单、服务、运营与佣金管理。</p>
+                <div class="demo-benefits">
+                  <div class="demo-benefit"><b>30 分钟</b>在线演示</div>
+                  <div class="demo-benefit"><b>1 对 1</b>专家沟通</div>
+                  <div class="demo-benefit"><b>定制方案</b>贴合业务</div>
+                  <div class="demo-benefit"><b>ROI 测算</b>量化价值</div>
+                </div>
+                <svg class="demo-illustration" viewBox="0 0 260 170" aria-hidden="true">
+                  <defs><linearGradient id="demoCube" x1="0" x2="1"><stop offset="0" stop-color="#eaf4ff"/><stop offset="1" stop-color="#0b6bff"/></linearGradient></defs>
+                  <path d="M16 132 130 70l114 62-114 30Z" fill="#eaf4ff" stroke="#cfe2fb"/>
+                  <path d="M130 24 72 56v58l58 32 58-32V56Z" fill="url(#demoCube)" opacity=".22" stroke="#8bbdff"/>
+                  <path d="M130 24v64M72 56l58 32 58-32M130 88v58" fill="none" stroke="#3a8bff" stroke-width="2"/>
+                  <circle cx="52" cy="120" r="4" fill="#0b6bff"/><circle cx="208" cy="118" r="4" fill="#14b8a6"/>
+                </svg>
+              </div>
+              <form id="demoForm" class="demo-form">
+                <div class="form-grid">
+                  <label class="form-field"><span>姓名 <b class="required">*</b></span><input name="name" type="text" placeholder="请输入您的姓名" required /></label>
+                  <label class="form-field"><span>公司名称 <b class="required">*</b></span><input name="company" type="text" placeholder="请输入公司名称" required /></label>
+                  <label class="form-field"><span>职位 <b class="required">*</b></span><input name="position" type="text" placeholder="请输入您的职位" required /></label>
+                  <label class="form-field"><span>手机号 <b class="required">*</b></span><input name="phone" type="tel" placeholder="请输入手机号" required /></label>
+                  <label class="form-field"><span>邮箱地址</span><input name="email" type="email" placeholder="请输入邮箱地址" /></label>
+                  <label class="form-field"><span>关注产品模块</span><select name="product_module"><option>请选择关注产品模块</option><option>保险经纪业务管理系统</option><option>LifeBee APP 移动拓客工具</option><option>佣金管理与对账</option><option>数据连接与 API</option></select></label>
+                  <label class="form-field full"><span>备注</span><textarea name="message" placeholder="请输入您的需求或问题"></textarea></label>
+                </div>
+                <button class="btn" type="submit" style="width:100%;" data-i18n="booking.button">提交预约申请 →</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer-note">
+      <div class="container">© 2017-2026 BeeFintech. All rights reserved.　隐私政策　服务条款　安全合规　帮助中心　◎ 简体中文</div>
+    </footer>
+  </div>
+  <script>
+    const translations = {
+      "zh-CN": {
+        "nav.product": "产品能力",
+        "nav.app": "APP移动端",
+        "nav.about": "关于我们",
+        "nav.partners": "合作伙伴",
+        "nav.support": "服务支持",
+        "nav.demo": "预约演示",
+        "nav.cta": "预约演示 →",
+        "lang.current": "简体中文",
+        "hero.badge": "保险数据网络  Insurance Data Network",
+        "hero.title": "连接保险公司、<br />经纪渠道与客户服务",
+        "hero.subtitle": "香港保险展业全链条保险经纪业务管理系统",
+        "hero.copy": "通过标准化数据连接与智能流程，贯通保险业务全链条，提升效率、降低成本、促进增长。",
+        "hero.secondary": "了解平台能力",
+        "proof.security": "安全合规",
+        "proof.open": "开放连接",
+        "proof.sync": "实时同步",
+        "proof.auto": "智能自动化",
+        "broker.title": "保险经纪业务管理系统",
+        "broker.copy": "覆盖销售、签单、服务、运营与佣金管理的全链路数字化平台",
+        "modules.title": "核心功能模块",
+        "modules.copy": "模块化能力，灵活组合，满足不同规模与发展阶段的业务需求",
+        "app.title": "LifeBee APP 移动拓客工具",
+        "app.copy": "移动办公，随时随地，高效追踪客户",
+        "app.tab.mobile": "移动展业",
+        "app.tab.client": "客户管理",
+        "app.tab.plan": "计划书生成",
+        "app.tab.sync": "消息与同步",
+        "app.pointsTitle": "随时随地开展业务，提升展业效率",
+        "about.title": "关于 BeeFintech",
+        "about.copy": "面向保险经纪及生态伙伴的一站式保险科技 PaaS 平台。",
+        "partners.title": "合作伙伴生态",
+        "partners.copy": "连接保险公司、经纪渠道、技术服务商与企业客户，构建开放协同伙伴生态。",
+        "roi.title": "ROI 测算",
+        "roi.copy": "输入关键数据，测算数字化带来的收益",
+        "roi.button": "开始测算 →",
+        "faq.title": "FAQ 自助查询",
+        "faq.copy": "快速找到您关心的问题",
+        "news.title": "保险科技资讯",
+        "news.more": "查看更多 →",
+        "booking.title": "预约产品演示",
+        "booking.copy": "专业方案顾问将为您梳理保险经纪业务流程，演示 BeeFintech 如何覆盖销售、签单、服务、运营与佣金管理。",
+        "booking.button": "提交预约申请 →"
+      },
+      "zh-HK": {
+        "nav.product": "產品能力",
+        "nav.app": "APP 流動端",
+        "nav.about": "關於我們",
+        "nav.partners": "合作夥伴",
+        "nav.support": "服務支援",
+        "nav.demo": "預約演示",
+        "nav.cta": "預約演示 →",
+        "lang.current": "繁體中文",
+        "hero.badge": "保險數據網絡  Insurance Data Network",
+        "hero.title": "連接保險公司、<br />經紀渠道與客戶服務",
+        "hero.subtitle": "香港保險展業全鏈條保險經紀業務管理系統",
+        "hero.copy": "透過標準化數據連接與智能流程，貫通保險業務全鏈條，提升效率、降低成本、促進增長。",
+        "hero.secondary": "了解平台能力",
+        "proof.security": "安全合規",
+        "proof.open": "開放連接",
+        "proof.sync": "實時同步",
+        "proof.auto": "智能自動化",
+        "broker.title": "保險經紀業務管理系統",
+        "broker.copy": "覆蓋銷售、簽單、服務、營運與佣金管理的全鏈路數字化平台",
+        "modules.title": "核心功能模組",
+        "modules.copy": "模組化能力，靈活組合，滿足不同規模與發展階段的業務需求",
+        "app.title": "LifeBee APP 流動拓客工具",
+        "app.copy": "流動辦公，隨時隨地，高效追蹤客戶",
+        "app.tab.mobile": "流動展業",
+        "app.tab.client": "客戶管理",
+        "app.tab.plan": "計劃書生成",
+        "app.tab.sync": "訊息與同步",
+        "app.pointsTitle": "隨時隨地開展業務，提升展業效率",
+        "about.title": "關於 BeeFintech",
+        "about.copy": "面向保險經紀及生態夥伴的一站式保險科技 PaaS 平台。",
+        "partners.title": "合作夥伴生態",
+        "partners.copy": "連接保險公司、經紀渠道、技術服務商與企業客戶，構建開放協同夥伴生態。",
+        "roi.title": "ROI 測算",
+        "roi.copy": "輸入關鍵數據，測算數字化帶來的收益",
+        "roi.button": "開始測算 →",
+        "faq.title": "FAQ 自助查詢",
+        "faq.copy": "快速找到您關心的問題",
+        "news.title": "保險科技資訊",
+        "news.more": "查看更多 →",
+        "booking.title": "預約產品演示",
+        "booking.copy": "專業方案顧問將為您梳理保險經紀業務流程，演示 BeeFintech 如何覆蓋銷售、簽單、服務、營運與佣金管理。",
+        "booking.button": "提交預約申請 →"
+      },
+      en: {
+        "nav.product": "Product",
+        "nav.app": "Mobile App",
+        "nav.about": "About",
+        "nav.partners": "Partners",
+        "nav.support": "Support",
+        "nav.demo": "Book Demo",
+        "nav.cta": "Book Demo →",
+        "lang.current": "English",
+        "hero.badge": "Insurance Data Network",
+        "hero.title": "Connect Insurers,<br />Broker Channels and Clients",
+        "hero.subtitle": "Full-cycle insurance brokerage management platform for Hong Kong",
+        "hero.copy": "Standardized data connections and intelligent workflows help unify the insurance value chain, improve efficiency, reduce cost, and support growth.",
+        "hero.secondary": "Explore Platform",
+        "proof.security": "Compliance",
+        "proof.open": "Open Connect",
+        "proof.sync": "Real-time Sync",
+        "proof.auto": "Automation",
+        "broker.title": "Insurance Brokerage Management System",
+        "broker.copy": "A full-cycle digital platform for sales, signing, servicing, operations and commission management.",
+        "modules.title": "Core Modules",
+        "modules.copy": "Modular capabilities for teams at different scales and stages of growth.",
+        "app.title": "LifeBee Mobile Growth App",
+        "app.copy": "Work on the move, follow up faster, and serve clients anywhere.",
+        "app.tab.mobile": "Mobile Sales",
+        "app.tab.client": "Client CRM",
+        "app.tab.plan": "Proposal Builder",
+        "app.tab.sync": "Messages & Sync",
+        "app.pointsTitle": "Run business anywhere and improve sales productivity",
+        "about.title": "About BeeFintech",
+        "about.copy": "A one-stop insurance technology PaaS platform for brokers and ecosystem partners.",
+        "partners.title": "Partner Ecosystem",
+        "partners.copy": "Connecting insurers, broker channels, technology providers and enterprise clients.",
+        "roi.title": "ROI Calculator",
+        "roi.copy": "Enter key figures to estimate the value of digital transformation.",
+        "roi.button": "Calculate →",
+        "faq.title": "FAQ",
+        "faq.copy": "Quickly find answers to common questions.",
+        "news.title": "InsurTech Insights",
+        "news.more": "View More →",
+        "booking.title": "Book a Product Demo",
+        "booking.copy": "Our solution specialist will walk through your brokerage workflow and show how BeeFintech supports sales, signing, service, operations and commission management.",
+        "booking.button": "Submit Demo Request →"
+      }
+    };
+
+    const switcher = document.getElementById("languageSwitcher");
+    const options = document.querySelectorAll(".language-option");
+
+    function setLanguage(lang) {
+      const dict = translations[lang] || translations["zh-CN"];
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-html");
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+      options.forEach((btn) => btn.classList.toggle("active", btn.dataset.lang === lang));
+      localStorage.setItem("beefintech-lang", lang);
+    }
+
+    switcher.addEventListener("click", (event) => {
+      event.stopPropagation();
+      switcher.classList.toggle("open");
+    });
+
+    options.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setLanguage(button.dataset.lang);
+        switcher.classList.remove("open");
+      });
+    });
+
+    document.addEventListener("click", () => switcher.classList.remove("open"));
+    setLanguage(localStorage.getItem("beefintech-lang") || "zh-CN");
+
+    const brokerTabs = document.querySelectorAll(".broker-tab");
+    const brokerPreview = document.getElementById("brokerPreview");
+
+    brokerTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        brokerTabs.forEach((item) => item.classList.remove("active"));
+        tab.classList.add("active");
+        brokerPreview.src = tab.dataset.preview;
+        brokerPreview.alt = tab.querySelector("strong").textContent + "示意图";
+      });
+    });
+
+    const appTabs = document.querySelectorAll(".app-shell-tab");
+    const appVisualImage = document.getElementById("appVisualImage");
+
+    appTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        appTabs.forEach((item) => item.classList.remove("active"));
+        tab.classList.add("active");
+        appVisualImage.src = tab.dataset.appImage;
+        appVisualImage.alt = `${tab.dataset.appTab}功能图`;
+      });
+    });
+
+    const gradientClasses = ["", " news-img-tech", " news-img-practice"];
+
+    function escapeHtml(value) {
+      return String(value || "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function newsImageStyle(item) {
+      return item.image_url ? ` style="background-image:linear-gradient(135deg, rgba(9,104,255,.12), rgba(9,20,48,.08)), url('${escapeHtml(item.image_url)}');background-size:cover;background-position:center;"` : "";
+    }
+
+    async function loadHomeContent() {
+      try {
+        const [faqs, news] = await Promise.all([
+          fetch("/api/faqs?limit=4").then((res) => res.ok ? res.json() : Promise.reject(new Error("FAQ load failed"))),
+          fetch("/api/news?limit=3").then((res) => res.ok ? res.json() : Promise.reject(new Error("News load failed")))
+        ]);
+        const faqList = document.getElementById("homeFaqList");
+        const newsList = document.getElementById("homeNewsList");
+        if (faqList && faqs.length) {
+          faqList.innerHTML = faqs.map((item) => `<li><a href="faq-detail.html?id=${encodeURIComponent(item.id)}">${escapeHtml(item.question)} <span>›</span></a></li>`).join("");
+        }
+        if (newsList && news.length) {
+          newsList.innerHTML = news.map((item, index) => `
+            <a class="news-item" href="news-detail.html?id=${encodeURIComponent(item.id)}">
+              <div class="news-img${gradientClasses[index] || ""}"${newsImageStyle(item)}></div>
+              <div>
+                <div class="news-tag">${escapeHtml(item.category)}</div>
+                <div class="news-title">${escapeHtml(item.title)}</div>
+                <div class="news-date">${escapeHtml(item.published_at)}</div>
+              </div>
+            </a>
+          `).join("");
+        }
+      } catch (error) {
+        console.warn("Using static homepage content:", error.message);
+      }
+    }
+
+    loadHomeContent();
+
+    const demoForm = document.getElementById("demoForm");
+    demoForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const payload = Object.fromEntries(new FormData(demoForm).entries());
+      try {
+        const response = await fetch("/api/bookings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error("booking failed");
+        demoForm.reset();
+        alert("已收到您的预约，我们会在一个工作日内联系您。");
+      } catch (error) {
+        alert("预约提交失败，请确认已通过 node server.js 启动本地服务。");
+      }
+    });
+  </script>
+</body>
+</html>

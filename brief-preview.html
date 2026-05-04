@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BeeFintech Design Preview</title>
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --surface: #F8FAFC;
+      --text: #0F172A;
+      --muted: #64748B;
+      --accent: #3B82F6;
+      --accent-hover: #2563EB;
+      --border: rgba(15, 23, 42, 0.08);
+      --radius: 8px;
+      --section: 72px;
+      --pad-mobile: 24px;
+      --pad-desktop: 40px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 56px 0 80px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .hero {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 44px 0;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 1.35rem;
+      line-height: 1.25;
+    }
+
+    section + section { margin-top: var(--section); }
+
+    .subhead {
+      max-width: 720px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .swatch {
+      min-height: 112px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .chip {
+      height: 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .swatch-text {
+      padding: 10px;
+      font-size: 0.82rem;
+    }
+
+    .muted { color: var(--muted); }
+
+    .specimens, .components {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: 24px;
+    }
+
+    .display-sample {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 600;
+      line-height: 1.08;
+    }
+
+    .mono {
+      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 0.875rem;
+    }
+
+    .ruler {
+      display: grid;
+      gap: 12px;
+    }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      min-height: 42px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .bar span {
+      padding-left: 14px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    button {
+      min-height: 42px;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #FFFFFF;
+      padding: 0 18px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover { background: var(--accent-hover); }
+    button:focus-visible, input:focus-visible { outline: 3px solid rgba(59, 130, 246, 0.24); outline-offset: 2px; }
+
+    input {
+      width: 100%;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0 12px;
+      font: inherit;
+      color: var(--text);
+      background: #FFFFFF;
+    }
+
+    .card-title {
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 860px) {
+      .swatches, .specimens, .components { grid-template-columns: 1fr; }
+      main, .hero { width: min(100% - 32px, 1120px); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <h1>BeeFintech 淡蓝金融科技设计系统</h1>
+      <p class="subhead">用于公开官网、ROI 计算器、FAQ、资讯中心和密码登录管理后台的统一视觉规则。</p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Color Palette</h2>
+      <div class="swatches">
+        <div class="swatch"><div class="chip" style="background:#FFFFFF"></div><div class="swatch-text"><strong>Background</strong><br><span class="muted">#FFFFFF</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#F8FAFC"></div><div class="swatch-text"><strong>Surface</strong><br><span class="muted">#F8FAFC</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#0F172A"></div><div class="swatch-text"><strong>Text</strong><br><span class="muted">#0F172A</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#64748B"></div><div class="swatch-text"><strong>Secondary</strong><br><span class="muted">#64748B</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#3B82F6"></div><div class="swatch-text"><strong>Accent</strong><br><span class="muted">#3B82F6</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#2563EB"></div><div class="swatch-text"><strong>Hover</strong><br><span class="muted">#2563EB</span></div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Typography</h2>
+      <div class="specimens">
+        <div class="panel">
+          <p class="muted mono">Display</p>
+          <p class="display-sample">香港保险科技平台</p>
+        </div>
+        <div class="panel">
+          <p class="muted mono">Body</p>
+          <p>让预约演示、ROI 测算、FAQ 查询和资讯内容形成统一的服务入口。</p>
+        </div>
+        <div class="panel">
+          <p class="muted mono">Mono</p>
+          <p class="mono">ROI +36.8% / BOOKING-20260502-001</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Spacing Ruler</h2>
+      <div class="ruler">
+        <div class="bar"><div class="fill" style="width:72px"></div><span>Section spacing: 72px</span></div>
+        <div class="bar"><div class="fill" style="width:40px"></div><span>Desktop content padding: 40px</span></div>
+        <div class="bar"><div class="fill" style="width:24px"></div><span>Mobile content padding: 24px</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Component Preview</h2>
+      <div class="components">
+        <div class="panel">
+          <p class="card-title">Primary Action</p>
+          <button type="button">预约演示</button>
+        </div>
+        <div class="panel">
+          <p class="card-title">Service Card</p>
+          <p class="muted">ROI 计算器帮助访客快速理解数字化投入回报。</p>
+        </div>
+        <div class="panel">
+          <p class="card-title">Input</p>
+          <input value="搜索 FAQ 或资讯" aria-label="搜索 FAQ 或资讯" />
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

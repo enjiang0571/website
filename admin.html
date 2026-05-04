@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BeeFintech 管理后台</title>
+  <style>
+    :root { --blue:#0b6bff; --ink:#07142f; --muted:#6f7f99; --line:#d8e7fb; --bg:#f3f8ff; --green:#12b89f; --red:#d92d20; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter, "Microsoft YaHei", Arial, sans-serif; color:var(--ink); background:linear-gradient(135deg,#fbfdff,var(--bg)); }
+    a { color:inherit; text-decoration:none; }
+    .shell { min-height:100vh; display:grid; grid-template-columns:260px 1fr; }
+    aside { padding:26px 20px; border-right:1px solid var(--line); background:rgba(255,255,255,.86); }
+    aside img { width:160px; margin-bottom:28px; }
+    .tab { width:100%; height:48px; margin-bottom:10px; padding:0 14px; border:1px solid transparent; border-radius:8px; color:#314462; background:transparent; text-align:left; font:inherit; font-weight:850; cursor:pointer; }
+    .tab.active { color:#fff; background:var(--blue); box-shadow:0 14px 28px rgba(11,107,255,.18); }
+    main { padding:28px; }
+    .top { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:24px; }
+    h1 { margin:0; font-size:30px; }
+    .muted { color:var(--muted); font-weight:650; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; min-height:38px; padding:0 14px; border:0; border-radius:7px; color:#fff; background:var(--blue); font:inherit; font-weight:850; cursor:pointer; }
+    .ghost { color:var(--blue); background:#fff; border:1px solid var(--line); }
+    .danger { background:var(--red); }
+    .panel { padding:20px; border:1px solid var(--line); border-radius:11px; background:#fff; box-shadow:0 18px 60px rgba(36,97,168,.08); }
+    .toolbar { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { padding:13px 10px; border-bottom:1px solid #edf3fb; text-align:left; vertical-align:top; }
+    th { color:#5d6f8b; font-size:13px; }
+    td { color:#182a45; font-weight:650; }
+    .actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .form { display:none; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; padding:18px; border:1px solid var(--line); border-radius:10px; background:#fbfdff; }
+    .form.active { display:grid; }
+    label { display:grid; gap:7px; color:#41516d; font-size:13px; font-weight:850; }
+    input, textarea { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:#fff; font:inherit; font-weight:650; outline:none; }
+    textarea { min-height:96px; resize:vertical; }
+    .full { grid-column:1 / -1; }
+    .hidden { display:none; }
+    .status { min-height:24px; color:var(--green); font-weight:800; }
+    @media (max-width: 900px) { .shell { grid-template-columns:1fr; } aside { position:static; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <img src="assets/brand/beefintech-logo@4x.png" alt="BeeFintech" />
+      <button class="tab active" type="button" data-view="faqs">FAQ 管理</button>
+      <button class="tab" type="button" data-view="news">资讯管理</button>
+      <button class="tab" type="button" data-view="bookings">预约管理</button>
+    </aside>
+    <main>
+      <div class="top">
+        <div>
+          <h1 id="pageTitle">FAQ 管理</h1>
+          <div class="muted">管理官网首页、列表页与详情页展示的数据。</div>
+        </div>
+        <div class="actions">
+          <a class="btn ghost" href="index.html">查看官网</a>
+          <button class="btn ghost" type="button" id="logoutBtn">退出登录</button>
+        </div>
+      </div>
+
+      <section class="panel" id="faqsView">
+        <div class="toolbar">
+          <strong>FAQ 列表</strong>
+          <button class="btn" type="button" data-new="faq">新增 FAQ</button>
+        </div>
+        <form class="form" id="faqForm">
+          <input type="hidden" name="id" />
+          <label>排序<input name="sort_order" type="number" value="100" /></label>
+          <label>问题<input name="question" required /></label>
+          <label class="full">回答<textarea name="answer" required></textarea></label>
+          <div class="actions full"><button class="btn" type="submit">保存 FAQ</button><button class="btn ghost" type="button" data-cancel="faq">取消</button></div>
+        </form>
+        <div class="status" id="faqStatus"></div>
+        <table><thead><tr><th>排序</th><th>问题</th><th>回答</th><th>操作</th></tr></thead><tbody id="faqRows"></tbody></table>
+      </section>
+
+      <section class="panel hidden" id="newsView">
+        <div class="toolbar">
+          <strong>资讯列表</strong>
+          <button class="btn" type="button" data-new="news">新增资讯</button>
+        </div>
+        <form class="form" id="newsForm">
+          <input type="hidden" name="id" />
+          <label>排序<input name="sort_order" type="number" value="100" /></label>
+          <label>分类<input name="category" required /></label>
+          <label>标题<input name="title" required /></label>
+          <label>时间<input name="published_at" type="date" required /></label>
+          <label class="full">图片 URL<input name="image_url" placeholder="可选，留空使用默认渐变图" /></label>
+          <label class="full">摘要<textarea name="summary"></textarea></label>
+          <label class="full">正文<textarea name="body" required></textarea></label>
+          <div class="actions full"><button class="btn" type="submit">保存资讯</button><button class="btn ghost" type="button" data-cancel="news">取消</button></div>
+        </form>
+        <div class="status" id="newsStatus"></div>
+        <table><thead><tr><th>排序</th><th>分类</th><th>标题</th><th>时间</th><th>操作</th></tr></thead><tbody id="newsRows"></tbody></table>
+      </section>
+
+      <section class="panel hidden" id="bookingsView">
+        <div class="toolbar">
+          <strong>预约记录</strong>
+          <button class="btn ghost" type="button" id="refreshBookings">刷新</button>
+        </div>
+        <table><thead><tr><th>提交时间</th><th>姓名</th><th>公司/职位</th><th>联系方式</th><th>关注产品与备注</th></tr></thead><tbody id="bookingRows"></tbody></table>
+      </section>
+    </main>
+  </div>
+  <script>
+    const state = { faqs: [], news: [], bookings: [] };
+    const $ = (selector) => document.querySelector(selector);
+    const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, {
+        ...options,
+        headers: { "Content-Type": "application/json", ...(options.headers || {}) }
+      });
+      if (response.status === 401) {
+        location.href = "admin-login.html";
+        throw new Error("Unauthorized");
+      }
+      if (!response.ok) throw new Error(await response.text());
+      return response.json();
+    }
+
+    async function init() {
+      await api("/api/admin/me");
+      await Promise.all([loadFaqs(), loadNews(), loadBookings()]);
+    }
+
+    function switchView(view) {
+      document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.view === view));
+      $("#faqsView").classList.toggle("hidden", view !== "faqs");
+      $("#newsView").classList.toggle("hidden", view !== "news");
+      $("#bookingsView").classList.toggle("hidden", view !== "bookings");
+      $("#pageTitle").textContent = view === "faqs" ? "FAQ 管理" : view === "news" ? "资讯管理" : "预约管理";
+    }
+
+    async function loadFaqs() {
+      state.faqs = await api("/api/faqs");
+      $("#faqRows").innerHTML = state.faqs.map((item) => `
+        <tr>
+          <td>${item.sort_order}</td>
+          <td>${escapeHtml(item.question)}</td>
+          <td>${escapeHtml(item.answer).slice(0, 80)}${item.answer.length > 80 ? "..." : ""}</td>
+          <td class="actions"><button class="btn ghost" type="button" data-edit-faq="${item.id}">编辑</button><button class="btn danger" type="button" data-delete-faq="${item.id}">删除</button></td>
+        </tr>
+      `).join("");
+    }
+
+    async function loadNews() {
+      state.news = await api("/api/news");
+      $("#newsRows").innerHTML = state.news.map((item) => `
+        <tr>
+          <td>${item.sort_order}</td>
+          <td>${escapeHtml(item.category)}</td>
+          <td>${escapeHtml(item.title)}</td>
+          <td>${escapeHtml(item.published_at)}</td>
+          <td class="actions"><button class="btn ghost" type="button" data-edit-news="${item.id}">编辑</button><button class="btn danger" type="button" data-delete-news="${item.id}">删除</button></td>
+        </tr>
+      `).join("");
+    }
+
+    async function loadBookings() {
+      state.bookings = await api("/api/bookings");
+      $("#bookingRows").innerHTML = state.bookings.map((item) => `
+        <tr>
+          <td>${escapeHtml(item.created_at)}</td>
+          <td>${escapeHtml(item.name)}</td>
+          <td>${escapeHtml(item.company)}<br><span class="muted">${escapeHtml(item.position)}</span></td>
+          <td>${escapeHtml(item.phone)}<br><span class="muted">${escapeHtml(item.email)}</span></td>
+          <td>${escapeHtml(item.product_module)}<br><span class="muted">${escapeHtml(item.message)}</span></td>
+        </tr>
+      `).join("");
+    }
+
+    function fillForm(form, item) {
+      Object.entries(item).forEach(([key, value]) => {
+        if (form.elements[key]) form.elements[key].value = value ?? "";
+      });
+      form.classList.add("active");
+      form.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    document.querySelectorAll(".tab").forEach((tab) => tab.addEventListener("click", () => switchView(tab.dataset.view)));
+    document.querySelector("[data-new='faq']").addEventListener("click", () => { $("#faqForm").reset(); $("#faqForm").elements.id.value = ""; $("#faqForm").classList.add("active"); });
+    document.querySelector("[data-new='news']").addEventListener("click", () => { $("#newsForm").reset(); $("#newsForm").elements.id.value = ""; $("#newsForm").classList.add("active"); });
+    document.querySelector("[data-cancel='faq']").addEventListener("click", () => $("#faqForm").classList.remove("active"));
+    document.querySelector("[data-cancel='news']").addEventListener("click", () => $("#newsForm").classList.remove("active"));
+    $("#refreshBookings").addEventListener("click", loadBookings);
+
+    $("#faqRows").addEventListener("click", async (event) => {
+      const edit = event.target.closest("[data-edit-faq]");
+      const del = event.target.closest("[data-delete-faq]");
+      if (edit) fillForm($("#faqForm"), state.faqs.find((item) => item.id === edit.dataset.editFaq));
+      if (del && confirm("确认删除这条 FAQ？")) {
+        await api(`/api/faqs/${encodeURIComponent(del.dataset.deleteFaq)}`, { method: "DELETE" });
+        await loadFaqs();
+      }
+    });
+
+    $("#newsRows").addEventListener("click", async (event) => {
+      const edit = event.target.closest("[data-edit-news]");
+      const del = event.target.closest("[data-delete-news]");
+      if (edit) fillForm($("#newsForm"), state.news.find((item) => item.id === edit.dataset.editNews));
+      if (del && confirm("确认删除这条资讯？")) {
+        await api(`/api/news/${encodeURIComponent(del.dataset.deleteNews)}`, { method: "DELETE" });
+        await loadNews();
+      }
+    });
+
+    $("#faqForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const data = Object.fromEntries(new FormData(form).entries());
+      const id = data.id;
+      delete data.id;
+      await api(id ? `/api/faqs/${encodeURIComponent(id)}` : "/api/faqs", { method: id ? "PUT" : "POST", body: JSON.stringify(data) });
+      form.classList.remove("active");
+      $("#faqStatus").textContent = "FAQ 已保存。";
+      await loadFaqs();
+    });
+
+    $("#newsForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const data = Object.fromEntries(new FormData(form).entries());
+      const id = data.id;
+      delete data.id;
+      await api(id ? `/api/news/${encodeURIComponent(id)}` : "/api/news", { method: id ? "PUT" : "POST", body: JSON.stringify(data) });
+      form.classList.remove("active");
+      $("#newsStatus").textContent = "资讯已保存。";
+      await loadNews();
+    });
+
+    $("#logoutBtn").addEventListener("click", async () => {
+      await api("/api/admin/logout", { method: "POST", body: "{}" });
+      location.href = "admin-login.html";
+    });
+
+    init().catch((error) => console.error(error));
+  </script>
+</body>
+</html>

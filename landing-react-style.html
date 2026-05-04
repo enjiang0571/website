@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BeeFintech 官网概念稿</title>
+  <style>
+    :root {
+      --blue: #106bff;
+      --blue-2: #0d58d8;
+      --navy: #07142f;
+      --text: #43536e;
+      --muted: #75849d;
+      --line: #dce7f6;
+      --soft: #f5f9ff;
+      --white: #fff;
+      --shadow: 0 22px 55px rgba(18, 70, 150, 0.13);
+      --container: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: #f7fbff;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--container), calc(100vw - 48px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: 72px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      gap: 30px;
+    }
+
+    .brand img {
+      display: block;
+      width: 178px;
+      height: auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 38px;
+      color: #111d35;
+      font-size: 14px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .nav span,
+    .lang {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .chev {
+      width: 9px;
+      height: 9px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+      opacity: .72;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: #16243f;
+      font-size: 14px;
+      font-weight: 720;
+      white-space: nowrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 6px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), #2484ff);
+      box-shadow: 0 12px 24px rgba(16, 107, 255, .22);
+      font-weight: 790;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      color: var(--blue);
+      background: var(--white);
+      border: 1px solid #9bbdff;
+      box-shadow: none;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 64px 0 72px;
+      background:
+        radial-gradient(circle at 75% 18%, rgba(16, 107, 255, .14), transparent 30%),
+        linear-gradient(rgba(16, 107, 255, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 107, 255, .05) 1px, transparent 1px),
+        linear-gradient(180deg, #fff 0%, #f4f9ff 100%);
+      background-size: auto, 64px 64px, 64px 64px, auto;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      align-items: center;
+      gap: 52px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      height: 38px;
+      padding: 0 16px;
+      border: 1px solid #cfe1ff;
+      border-radius: 999px;
+      color: #1458c7;
+      background: #edf5ff;
+      font-size: 13px;
+      font-weight: 780;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    h1 {
+      margin: 30px 0 16px;
+      color: var(--navy);
+      font-size: 56px;
+      line-height: 1.12;
+      font-weight: 880;
+    }
+
+    .hero h2 {
+      margin: 0 0 18px;
+      color: var(--blue);
+      font-size: 23px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .hero p {
+      width: 560px;
+      max-width: 100%;
+      margin: 0;
+      color: #58677f;
+      font-size: 16px;
+      line-height: 1.9;
+      font-weight: 560;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 18px;
+      margin: 30px 0 34px;
+    }
+
+    .proofs {
+      display: grid;
+      grid-template-columns: repeat(4, max-content);
+      gap: 24px;
+      color: #263955;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .proof,
+    .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .proof {
+      gap: 9px;
+    }
+
+    .icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      color: var(--blue);
+      background: #eaf3ff;
+      font-size: 15px;
+      font-weight: 850;
+    }
+
+    .hero-visual {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .74);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .section {
+      padding: 76px 0;
+    }
+
+    .section.white {
+      background: #fff;
+    }
+
+    .section-head {
+      margin-bottom: 36px;
+      text-align: center;
+    }
+
+    .section-head h2 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 34px;
+      line-height: 1.25;
+      font-weight: 850;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .dashboard-shell {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      overflow: hidden;
+      min-height: 560px;
+      border: 1px solid #d7e4f5;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .dash-side {
+      padding: 20px 16px;
+      border-right: 1px solid var(--line);
+      background: #f7fbff;
+    }
+
+    .dash-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 28px;
+      color: var(--navy);
+      font-weight: 820;
+    }
+
+    .dash-mark {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      color: #fff;
+      background: var(--blue);
+      font-weight: 850;
+    }
+
+    .menu {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 0 12px;
+      border-radius: 7px;
+      color: #53637c;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .menu .active {
+      color: var(--blue);
+      background: #eaf3ff;
+    }
+
+    .dash-main {
+      padding: 28px;
+      background: linear-gradient(180deg, #fbfdff, #f7fbff);
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .kpi,
+    .panel {
+      border: 1px solid #dfe9f7;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(20, 82, 170, .06);
+    }
+
+    .kpi {
+      padding: 20px;
+    }
+
+    .kpi small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .kpi strong {
+      display: block;
+      margin: 9px 0 5px;
+      color: var(--navy);
+      font-size: 24px;
+      font-weight: 860;
+    }
+
+    .up {
+      color: #0aa987;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .dash-panels {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      min-height: 260px;
+      padding: 22px;
+    }
+
+    .panel-title {
+      color: var(--navy);
+      font-size: 15px;
+      font-weight: 820;
+    }
+
+    .line-chart {
+      height: 180px;
+      margin-top: 22px;
+      border-radius: 10px;
+      background:
+        linear-gradient(#edf3fb 1px, transparent 1px),
+        linear-gradient(90deg, #edf3fb 1px, transparent 1px);
+      background-size: 100% 45px, 68px 100%;
+    }
+
+    .line-chart svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .donut {
+      width: 172px;
+      height: 172px;
+      margin: 24px auto 0;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: conic-gradient(#106bff 0 45%, #19b8a5 45% 72%, #a8d2ff 72% 90%, #e1ebf7 90% 100%);
+    }
+
+    .donut::after {
+      content: "本月保费\A 2,350,000";
+      white-space: pre;
+      display: grid;
+      place-items: center;
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      color: var(--navy);
+      background: #fff;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 820;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card {
+      min-height: 172px;
+      padding: 22px;
+      border: 1px solid #dfe9f7;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(20, 82, 170, .06);
+      transition: .16s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 36px rgba(20, 82, 170, .12);
+    }
+
+    .feature-card h3 {
+      margin: 16px 0 8px;
+      color: var(--navy);
+      font-size: 17px;
+      font-weight: 830;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+      font-weight: 600;
+    }
+
+    .app-section {
+      overflow: hidden;
+      padding: 84px 0;
+      color: #fff;
+      background:
+        radial-gradient(circle at 74% 26%, rgba(45, 126, 255, .25), transparent 28%),
+        linear-gradient(135deg, #07142f 0%, #0d1d3b 62%, #10284f 100%);
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      align-items: center;
+      gap: 56px;
+    }
+
+    .app-copy h2 {
+      margin: 0 0 14px;
+      font-size: 38px;
+      line-height: 1.22;
+      font-weight: 860;
+    }
+
+    .app-copy > p {
+      margin: 0 0 34px;
+      color: #9fb0cc;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .app-list {
+      display: grid;
+      gap: 22px;
+    }
+
+    .app-item {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .app-item .icon {
+      width: 52px;
+      height: 52px;
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .app-item h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 820;
+    }
+
+    .app-item p {
+      margin: 0;
+      color: #a7b6cf;
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 600;
+    }
+
+    .phone-stage {
+      position: relative;
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+    }
+
+    .phone {
+      position: absolute;
+      width: 232px;
+      height: 470px;
+      padding: 18px 12px 14px;
+      border: 8px solid #0b1220;
+      border-radius: 42px;
+      background: #fff;
+      box-shadow: 0 26px 50px rgba(0,0,0,.36);
+    }
+
+    .phone.main {
+      z-index: 3;
+      transform: translateX(0);
+    }
+
+    .phone.left {
+      z-index: 2;
+      transform: translateX(-145px) scale(.9);
+      opacity: .72;
+    }
+
+    .phone.right {
+      z-index: 2;
+      transform: translateX(145px) scale(.9);
+      opacity: .72;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      width: 72px;
+      height: 16px;
+      border-radius: 0 0 12px 12px;
+      background: #0b1220;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+
+    .screen {
+      height: 100%;
+      overflow: hidden;
+      border-radius: 31px;
+      background: linear-gradient(180deg, #fbfdff, #f4f8ff);
+      color: #1b2944;
+      padding: 28px 14px 14px;
+    }
+
+    .screen-title {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 850;
+      margin-bottom: 14px;
+    }
+
+    .client-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 58px;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid #e1ebf8;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #dcecff;
+    }
+
+    .client-row strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .client-row small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .cta {
+      padding: 70px 0;
+      color: #fff;
+      text-align: center;
+      background: linear-gradient(135deg, var(--blue), #1f85ff);
+    }
+
+    .cta h2 {
+      margin: 0 0 14px;
+      font-size: 34px;
+      font-weight: 850;
+    }
+
+    .cta p {
+      margin: 0 0 28px;
+      color: #d8e8ff;
+      font-weight: 600;
+    }
+
+    .cta .btn {
+      color: var(--blue);
+      background: #fff;
+      box-shadow: 0 14px 30px rgba(0,0,0,.12);
+    }
+
+    @media (max-width: 980px) {
+      .container {
+        width: min(100%, calc(100vw - 28px));
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .actions .lang {
+        display: none;
+      }
+
+      .brand img {
+        width: 150px;
+      }
+
+      .hero-grid,
+      .dashboard-shell,
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .proofs,
+      .kpis,
+      .dash-panels,
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .dash-side {
+        display: none;
+      }
+
+      .phone-stage {
+        min-height: 470px;
+        transform: scale(.82);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="#top" aria-label="BeeFintech 首页">
+          <img src="assets/slices/beefintech-logo.png" alt="BeeFintech" />
+        </a>
+        <nav class="nav">
+          <span>产品能力 <i class="chev"></i></span>
+          <span>解决方案 <i class="chev"></i></span>
+          <a href="#app">APP移动端</a>
+          <span>资源中心 <i class="chev"></i></span>
+          <a href="#about">关于我们</a>
+        </nav>
+        <div class="actions">
+          <span class="lang">◎ 简体中文 <i class="chev"></i></span>
+          <a class="btn" href="#cta">预约演示 →</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="eyebrow"><span class="dot"></span>保险数据网络 Insurance Data Network</div>
+            <h1>连接保险公司、<br />经纪渠道与客户服务</h1>
+            <h2>香港保险展业全链条保险经纪业务管理系统</h2>
+            <p>通过标准化数据结构与智能流转，贯通保险业务全链条，提升效率、降低成本、促进增长。</p>
+            <div class="hero-actions">
+              <a class="btn" href="#cta">预约演示 →</a>
+              <a class="btn secondary" href="#platform">了解平台能力</a>
+            </div>
+            <div class="proofs">
+              <span class="proof"><span class="icon">◇</span>安全合规</span>
+              <span class="proof"><span class="icon">ϟ</span>灵活扩展</span>
+              <span class="proof"><span class="icon">↻</span>实时同步</span>
+              <span class="proof"><span class="icon">◎</span>智能自动化</span>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <img src="assets/slices/hero-network.png" alt="保险数据网络拓扑图" />
+          </div>
+        </div>
+      </section>
+
+      <section id="platform" class="section white">
+        <div class="container">
+          <div class="section-head">
+            <h2>保险经纪业务管理系统</h2>
+            <p>覆盖展业、签单、服务、运营与佣金管理的全面数字化平台</p>
+          </div>
+          <div class="dashboard-shell">
+            <aside class="dash-side">
+              <div class="dash-brand"><span class="dash-mark">B</span>BeeFintech</div>
+              <div class="menu">
+                <div class="active"><span class="icon">▣</span>工作台</div>
+                <div><span class="icon">♙</span>客户管理</div>
+                <div><span class="icon">▤</span>保单管理</div>
+                <div><span class="icon">◌</span>业绩分析</div>
+                <div><span class="icon">⚙</span>系统设置</div>
+              </div>
+            </aside>
+            <div class="dash-main">
+              <div class="kpis">
+                <div class="kpi"><small>本月总保费 (HKD)</small><strong>18,750,000</strong><span class="up">↑ 12.5%</span></div>
+                <div class="kpi"><small>新增保单 (份)</small><strong>3,892</strong><span class="up">↑ 8.2%</span></div>
+                <div class="kpi"><small>新增客户 (人)</small><strong>1,234</strong><span class="up">↑ 15.7%</span></div>
+                <div class="kpi"><small>达成率 (%)</small><strong>82.6%</strong><span class="up">↑ 4.1%</span></div>
+              </div>
+              <div class="dash-panels">
+                <div class="panel">
+                  <div class="panel-title">保费趋势</div>
+                  <div class="line-chart">
+                    <svg viewBox="0 0 620 180" preserveAspectRatio="none" aria-hidden="true">
+                      <polyline points="0,130 60,104 120,114 180,86 240,72 300,42 360,95 420,66 480,76 540,50 620,58" fill="none" stroke="#106bff" stroke-width="5" />
+                      <polyline points="0,150 60,132 120,136 180,120 240,106 300,88 360,126 420,104 480,112 540,94 620,102" fill="none" stroke="#9cc8ff" stroke-width="3" />
+                    </svg>
+                  </div>
+                </div>
+                <div class="panel">
+                  <div class="panel-title">业务构成</div>
+                  <div class="donut"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>核心功能模块</h2>
+            <p>模块化能力，灵活组合，满足不同规模与发展阶段的业务需求</p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card"><span class="icon">▣</span><h3>功能管理</h3><p>权限、角色、组织与通知规则集中配置。</p></article>
+            <article class="feature-card"><span class="icon">$</span><h3>佣金管理</h3><p>支持佣金方案、核算对账与分级发放。</p></article>
+            <article class="feature-card"><span class="icon">▥</span><h3>业绩分析</h3><p>用看板、目标与趋势分析辅助经营决策。</p></article>
+            <article class="feature-card"><span class="icon">⌁</span><h3>渠道管理</h3><p>覆盖渠道分级、政策管理与协作评估。</p></article>
+            <article class="feature-card"><span class="icon">△</span><h3>智能保顾系统</h3><p>通过问卷与规则识别客户保障需求。</p></article>
+            <article class="feature-card"><span class="icon">▤</span><h3>预约签单</h3><p>在线预约、电子签名、资料收集与进度跟踪。</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="app" class="app-section">
+        <div class="container app-grid">
+          <div class="app-copy">
+            <h2>LifeBee APP 移动拓客工具</h2>
+            <p>移动化展业，随时随地，高效连接客户</p>
+            <div class="app-list">
+              <div class="app-item"><span class="icon">▣</span><div><h3>移动展业</h3><p>随时查看产品、制作计划书、管理客户，减少桌面端依赖。</p></div></div>
+              <div class="app-item"><span class="icon">♙</span><div><h3>客户管理</h3><p>客户画像、跟进记录和保单状态集中管理，服务动作更清楚。</p></div></div>
+              <div class="app-item"><span class="icon">▤</span><div><h3>计划书生成</h3><p>快速生成专业计划书，支持多产品对比与保费试算。</p></div></div>
+            </div>
+          </div>
+          <div class="phone-stage">
+            <div class="phone left"></div>
+            <div class="phone main">
+              <div class="screen">
+                <div class="screen-title">客户管理</div>
+                <div class="client-row"><span class="avatar"></span><div><strong>张先生</strong><small>意向客户</small></div></div>
+                <div class="client-row"><span class="avatar"></span><div><strong>陈女士</strong><small>储蓄计划跟进中</small></div></div>
+                <div class="client-row"><span class="avatar"></span><div><strong>郭先生</strong><small>计划书待确认</small></div></div>
+                <div class="client-row"><span class="avatar"></span><div><strong>李女士</strong><small>预约签单</small></div></div>
+              </div>
+            </div>
+            <div class="phone right"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cta" class="cta">
+        <div class="container">
+          <h2>预约一次产品演示</h2>
+          <p>专业方案顾问将为您提供定制化演示与解决方案</p>
+          <a class="btn" href="mailto:contact@beefintech.hk">立即预约 →</a>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

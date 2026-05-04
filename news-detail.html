@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>资讯详情 - BeeFintech</title>
+  <style>
+    :root { --blue:#0b6bff; --ink:#07142f; --muted:#6f7f99; --line:#d8e7fb; --bg:#f3f8ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family: Inter, "Microsoft YaHei", Arial, sans-serif; color:var(--ink); background:linear-gradient(135deg,#fbfdff,var(--bg)); }
+    a { color:inherit; text-decoration:none; }
+    .header { position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; height:72px; padding:0 7vw; background:rgba(255,255,255,.92); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+    .logo img { width:150px; height:auto; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 18px; border-radius:7px; color:white; background:var(--blue); font-weight:800; box-shadow:0 12px 26px rgba(11,107,255,.18); }
+    .ghost { color:var(--blue); background:#fff; border:1px solid var(--line); box-shadow:none; }
+    main { max-width:960px; margin:44px auto 80px; padding:0 24px; }
+    .panel { padding:38px; border:1px solid var(--line); border-radius:10px; background:white; box-shadow:0 24px 70px rgba(36,97,168,.08); }
+    .eyebrow { color:var(--blue); font-size:13px; font-weight:850; }
+    h1 { margin:10px 0 12px; font-size:34px; letter-spacing:0; }
+    .meta { color:var(--muted); font-weight:750; margin-bottom:24px; }
+    .body { color:#334765; font-size:17px; line-height:2; font-weight:650; }
+    .body p { margin:0 0 18px; }
+    .actions { display:flex; gap:12px; margin-top:32px; flex-wrap:wrap; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="logo" href="index.html"><img src="assets/brand/beefintech-logo@4x.png" alt="BeeFintech" /></a>
+    <a class="btn" href="index.html#booking">预约演示 →</a>
+  </header>
+  <main>
+    <section class="panel">
+      <div class="eyebrow" id="tag">保险科技资讯</div>
+      <h1 id="title"></h1>
+      <div class="meta" id="meta"></div>
+      <div class="body" id="body"></div>
+      <div class="actions">
+        <a class="btn ghost" href="news.html">返回资讯列表</a>
+        <a class="btn ghost" href="index.html">返回首页</a>
+      </div>
+    </section>
+  </main>
+  <script>
+    const news = {
+      trend: ["行业洞察", "香港保险业数字化趋势与机遇", "2026-05-20", ["香港保险经纪业务正在从线下流程逐步转向线上协同、数据连接和移动展业。数字化系统能帮助团队统一客户、保单、签单、佣金和服务数据。", "对经纪团队而言，真正的机会不只是把表格搬到线上，而是通过标准流程和实时数据提升客户服务效率。"]],
+      release: ["产品动态", "BeeFintech 平台 2024 春季更新", "2026-05-15", ["本次更新围绕销售工具、签单流程、保单服务和佣金管理进行体验优化。", "平台强化了产品对比、计划书生成、数据看板和团队协作能力，让不同角色可以在同一套数据基础上工作。"]],
+      practice: ["最佳实践", "数字化如何提升经纪业务生产力", "2026-05-08", ["经纪团队可以通过标准化线索跟进、移动端客户管理、自动化保单提醒和佣金对账流程减少重复工作。", "当日常流程被系统承接，团队能把更多时间投入到客户沟通、方案设计和业务增长。"]],
+      policy: ["政策观察", "香港保险科技政策与合规观察", "2026-04-28", ["保险科技平台需要同时关注效率、数据安全和合规要求。", "通过权限配置、操作留痕、数据隔离和审批流，企业可以在提升协作效率的同时保留管理可控性。"]],
+      roi: ["经营分析", "保险经纪数字化 ROI 如何测算", "2026-04-18", ["ROI 测算不应只看软件成本，还要纳入人力节省、佣金对账效率、客户转化率、保单续期管理和服务响应速度。", "清晰的业务指标能帮助管理者判断数字化投入是否真正转化为团队增长。"]]
+    };
+    const tag = document.getElementById("tag");
+    const title = document.getElementById("title");
+    const meta = document.getElementById("meta");
+    const body = document.getElementById("body");
+    const id = new URLSearchParams(location.search).get("id") || "trend";
+    function render(item) {
+      if (Array.isArray(item)) {
+        tag.textContent = item[0];
+        title.textContent = item[1];
+        meta.textContent = item[2];
+        body.innerHTML = item[3].map((text) => `<p>${text}</p>`).join("");
+        return;
+      }
+      tag.textContent = item.category;
+      title.textContent = item.title;
+      meta.textContent = item.published_at;
+      body.innerHTML = String(item.body || "").split(/\n+/).map((text) => `<p>${text}</p>`).join("");
+    }
+    fetch(`/api/news/${encodeURIComponent(id)}`)
+      .then((res) => res.ok ? res.json() : Promise.reject(new Error("News detail failed")))
+      .then(render)
+      .catch(() => render(news[id] || ["资讯", "未找到相关资讯", "", ["请返回资讯列表查看已有内容。"]]));
+  </script>
+</body>
+</html>

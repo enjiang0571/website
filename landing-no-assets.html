@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BeeFintech 无切图资产版本</title>
+  <style>
+    :root {
+      --blue: #106bff;
+      --navy: #07142f;
+      --text: #42536f;
+      --muted: #71809a;
+      --line: #dce7f6;
+      --shadow: 0 22px 55px rgba(18, 70, 150, .13);
+      --container: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: #f7fbff;
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--container), calc(100vw - 48px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 72px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(16px);
+    }
+    .topbar-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .brand { display: flex; align-items: center; gap: 10px; color: #101827; font-size: 24px; font-weight: 850; }
+    .fake-logo {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #56b8ff, #106bff 58%, #0756da);
+      box-shadow: 0 10px 22px rgba(16,107,255,.22);
+    }
+    .fake-logo svg { width: 25px; height: 25px; }
+    .nav { display: flex; align-items: center; gap: 38px; color: #111d35; font-size: 14px; font-weight: 760; }
+    .nav span { display: inline-flex; align-items: center; gap: 7px; }
+    .chev { width: 9px; height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); opacity: .72; }
+    .actions { display: flex; align-items: center; gap: 18px; color: #16243f; font-size: 14px; font-weight: 720; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 24px;
+      border-radius: 6px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), #2484ff);
+      box-shadow: 0 12px 24px rgba(16,107,255,.22);
+      font-weight: 790;
+    }
+    .btn.secondary { color: var(--blue); background: #fff; border: 1px solid #9bbdff; box-shadow: none; }
+
+    .hero {
+      padding: 64px 0 72px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 75% 18%, rgba(16,107,255,.14), transparent 30%),
+        linear-gradient(rgba(16,107,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,107,255,.05) 1px, transparent 1px),
+        linear-gradient(180deg, #fff 0%, #f4f9ff 100%);
+      background-size: auto, 64px 64px, 64px 64px, auto;
+    }
+    .hero-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 52px; align-items: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      height: 38px;
+      padding: 0 16px;
+      border: 1px solid #cfe1ff;
+      border-radius: 999px;
+      color: #1458c7;
+      background: #edf5ff;
+      font-size: 13px;
+      font-weight: 780;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+    h1 { margin: 30px 0 16px; color: var(--navy); font-size: 56px; line-height: 1.12; font-weight: 880; }
+    .hero h2 { margin: 0 0 18px; color: var(--blue); font-size: 23px; line-height: 1.35; font-weight: 800; }
+    .hero p { width: 560px; max-width: 100%; margin: 0; color: #58677f; font-size: 16px; line-height: 1.9; font-weight: 560; }
+    .hero-actions { display: flex; gap: 18px; margin: 30px 0 34px; }
+    .proofs { display: grid; grid-template-columns: repeat(4, max-content); gap: 24px; color: #263955; font-size: 13px; font-weight: 760; }
+    .proof { display: inline-flex; align-items: center; gap: 9px; }
+    .icon { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; color: var(--blue); background: #eaf3ff; font-weight: 850; }
+
+    .network-card {
+      position: relative;
+      min-height: 430px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background:
+        linear-gradient(rgba(16,107,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,107,255,.045) 1px, transparent 1px),
+        rgba(255,255,255,.82);
+      background-size: 48px 48px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hub {
+      position: absolute;
+      left: 50%;
+      top: 47%;
+      width: 136px;
+      height: 136px;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      border-radius: 28px;
+      background: linear-gradient(145deg, rgba(16,107,255,.16), rgba(16,107,255,.04));
+      box-shadow: inset 0 -18px 30px rgba(16,107,255,.08);
+    }
+    .hub .fake-logo { width: 74px; height: 74px; border-radius: 18px; }
+    .node {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 142px;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 12px 28px rgba(20,82,170,.08);
+      color: #16243f;
+      font-size: 14px;
+      font-weight: 820;
+    }
+    .node small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; font-weight: 650; }
+    .node.n1 { left: 62px; top: 62px; }
+    .node.n2 { left: 42px; top: 176px; }
+    .node.n3 { left: 72px; bottom: 72px; }
+    .node.n4 { right: 58px; top: 72px; }
+    .node.n5 { right: 38px; top: 194px; }
+    .node.n6 { right: 70px; bottom: 72px; }
+    .line {
+      position: absolute;
+      height: 2px;
+      border-top: 2px dashed rgba(16,107,255,.46);
+      transform-origin: left center;
+    }
+    .l1 { left: 196px; top: 105px; width: 190px; transform: rotate(22deg); }
+    .l2 { left: 180px; top: 220px; width: 210px; }
+    .l3 { left: 208px; top: 330px; width: 180px; transform: rotate(-24deg); }
+    .l4 { right: 188px; top: 118px; width: 185px; transform: rotate(158deg); }
+    .l5 { right: 176px; top: 236px; width: 205px; border-color: rgba(24,183,170,.55); }
+    .l6 { right: 200px; top: 335px; width: 175px; transform: rotate(-158deg); border-color: rgba(24,183,170,.55); }
+    .stats {
+      position: absolute;
+      left: 72px;
+      right: 72px;
+      bottom: 22px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.9);
+      overflow: hidden;
+    }
+    .stat { min-height: 58px; padding: 10px 14px; border-right: 1px solid var(--line); color: var(--navy); font-weight: 850; font-size: 15px; }
+    .stat:last-child { border-right: 0; }
+    .stat small { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; font-weight: 650; }
+
+    .section { padding: 70px 0; }
+    .section-head { margin-bottom: 34px; text-align: center; }
+    .section-head h2 { margin: 0 0 10px; color: var(--navy); font-size: 34px; font-weight: 850; }
+    .section-head p { margin: 0; color: var(--muted); font-weight: 600; }
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .card { min-height: 170px; padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: #fff; box-shadow: 0 10px 24px rgba(20,82,170,.06); }
+    .card h3 { margin: 14px 0 8px; color: var(--navy); }
+    .card p { margin: 0; color: var(--muted); line-height: 1.65; font-size: 14px; }
+
+    @media (max-width: 980px) {
+      .nav { display: none; }
+      .actions .lang { display: none; }
+      .hero-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 40px; }
+      .proofs, .cards { grid-template-columns: 1fr 1fr; }
+      .network-card { transform: scale(.86); transform-origin: top center; margin-bottom: -54px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#">
+        <span class="fake-logo" aria-hidden="true">
+          <svg viewBox="0 0 32 32">
+            <path d="M16 2 29 9.3v14.4L16 31 3 23.7V9.3L16 2Z" fill="currentColor" opacity=".22"></path>
+            <path d="M16 5 26 10.8v4.2l-9.5-5.4-7.3 4.2v8.4l6.8 3.9 8.6-5v-3.9L16 22.2l-4.4-2.5v-3.6l4.4-2.5 10 5.8v5.2L16 30 6 24.2V12L16 5Z" fill="#fff"></path>
+          </svg>
+        </span>
+        BeeFintech
+      </a>
+      <nav class="nav">
+        <span>产品能力 <i class="chev"></i></span>
+        <span>解决方案 <i class="chev"></i></span>
+        <a href="#app">APP移动端</a>
+        <span>资源中心 <i class="chev"></i></span>
+        <a href="#about">关于我们</a>
+      </nav>
+      <div class="actions">
+        <span class="lang">◎ 简体中文 <i class="chev"></i></span>
+        <a class="btn" href="#booking">预约演示 →</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="dot"></span>保险数据网络 Insurance Data Network</div>
+          <h1>连接保险公司、<br />经纪渠道与客户服务</h1>
+          <h2>香港保险展业全链条保险经纪业务管理系统</h2>
+          <p>通过标准化数据结构与智能流转，贯通保险业务全链条，提升效率、降低成本、促进增长。</p>
+          <div class="hero-actions">
+            <a class="btn" href="#booking">预约演示 →</a>
+            <a class="btn secondary" href="#platform">了解平台能力</a>
+          </div>
+          <div class="proofs">
+            <span class="proof"><span class="icon">◇</span>安全合规</span>
+            <span class="proof"><span class="icon">ϟ</span>灵活扩展</span>
+            <span class="proof"><span class="icon">↻</span>实时同步</span>
+            <span class="proof"><span class="icon">◎</span>智能自动化</span>
+          </div>
+        </div>
+
+        <div class="network-card" aria-label="纯代码生成的保险数据网络">
+          <span class="line l1"></span><span class="line l2"></span><span class="line l3"></span>
+          <span class="line l4"></span><span class="line l5"></span><span class="line l6"></span>
+          <div class="hub"><span class="fake-logo">B</span></div>
+          <div class="node n1"><span class="icon">▥</span><div>保险公司<small>核心系统</small></div></div>
+          <div class="node n2"><span class="icon">♙</span><div>经纪团队<small>组织 / 团队</small></div></div>
+          <div class="node n3"><span class="icon">♙</span><div>代理人<small>展业 / 服务</small></div></div>
+          <div class="node n4"><span class="icon">○</span><div>客户<small>个人 / 企业</small></div></div>
+          <div class="node n5"><span class="icon">▤</span><div>保单<small>投保 / 承保</small></div></div>
+          <div class="node n6"><span class="icon">☏</span><div>服务任务<small>工单 / 回访</small></div></div>
+          <div class="stats">
+            <div class="stat">300+<small>系统连接</small></div>
+            <div class="stat">99.9%<small>同步成功</small></div>
+            <div class="stat">实时<small>事件处理</small></div>
+            <div class="stat">加密<small>端到端保护</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="platform" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>无切图资产效果</h2>
+          <p>这个版本的 Logo 和 Hero 图全部由代码模拟，能看出结构，但品牌准确度会下降。</p>
+        </div>
+        <div class="cards">
+          <article class="card"><span class="icon">▣</span><h3>Logo 会失真</h3><p>没有真实资产时只能近似绘制，细节比例、负形和渐变都很难完全一致。</p></article>
+          <article class="card"><span class="icon">◇</span><h3>插画会模板化</h3><p>Hero 网络图能表达结构，但缺少原图的等距质感、透视和品牌精细度。</p></article>
+          <article class="card"><span class="icon">▤</span><h3>文字 UI 可代码化</h3><p>导航、按钮、卡片、FAQ、表单这类结构化 UI 更适合直接写代码。</p></article>
+          <article class="card"><span class="icon">↻</span><h3>最佳方案是混合</h3><p>品牌资产和复杂视觉用切图，结构化界面用 HTML/CSS 组件。</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
