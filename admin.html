@@ -109,6 +109,14 @@
     const $ = (selector) => document.querySelector(selector);
     const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
 
+    function formatDateTime(value) {
+      if (!value) return "";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      const pad = (number) => String(number).padStart(2, "0");
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+    }
+
     async function api(path, options = {}) {
       const response = await fetch(path, {
         ...options,
@@ -164,7 +172,7 @@
       state.bookings = await api("/api/bookings");
       $("#bookingRows").innerHTML = state.bookings.map((item) => `
         <tr>
-          <td>${escapeHtml(item.created_at)}</td>
+          <td>${escapeHtml(formatDateTime(item.created_at))}</td>
           <td>${escapeHtml(item.name)}</td>
           <td>${escapeHtml(item.company)}<br><span class="muted">${escapeHtml(item.position)}</span></td>
           <td>${escapeHtml(item.phone)}<br><span class="muted">${escapeHtml(item.email)}</span></td>
