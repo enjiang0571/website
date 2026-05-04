@@ -38,7 +38,7 @@
     },
     {
       "src": "/api/bookings",
-      "dest": "/api/bookings.js"
+      "dest": "/api/bookings/index.js"
     },
     {
       "src": "/api/admin/login",
