@@ -2984,6 +2984,26 @@
     const appTabs = document.querySelectorAll(".app-shell-tab");
     const appVisualImage = document.getElementById("appVisualImage");
 
+    const preloadImages = [
+      "assets/system-tabs/sales-marketing.png",
+      "assets/system-tabs/signing-marketing.png",
+      "assets/system-tabs/policy-marketing.png",
+      "assets/system-tabs/operations-marketing.png",
+      "assets/system-tabs/commission-marketing.png",
+      "assets/app-tabs/sync.png",
+      "assets/app-tabs/product-library.png",
+      "assets/app-tabs/product-compare.png",
+      "assets/app-tabs/premium-calculator.png",
+      "assets/app-tabs/client-management.png",
+      "assets/app-tabs/business-card.png",
+      "assets/app-tabs/message-center.png"
+    ];
+
+    preloadImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+
     appTabs.forEach((tab) => {
       tab.addEventListener("click", () => {
         appTabs.forEach((item) => item.classList.remove("active"));
@@ -3053,7 +3073,7 @@
         demoForm.reset();
         alert("已收到您的预约，我们会在一个工作日内联系您。");
       } catch (error) {
-        alert("预约提交失败，请确认已通过 node server.js 启动本地服务。");
+        alert("预约提交失败，请稍后再试，或联系管理员检查 Supabase / Vercel 环境变量。");
       }
     });
   </script>
