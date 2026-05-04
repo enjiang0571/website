@@ -3069,11 +3069,11 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
-        if (!response.ok) throw new Error("booking failed");
+        if (!response.ok) throw new Error(await response.text());
         demoForm.reset();
         alert("已收到您的预约，我们会在一个工作日内联系您。");
       } catch (error) {
-        alert("预约提交失败，请稍后再试，或联系管理员检查 Supabase / Vercel 环境变量。");
+        alert(`预约提交失败：${error.message || "请稍后再试，或联系管理员检查 Supabase / Vercel 环境变量。"}`);
       }
     });
   </script>
